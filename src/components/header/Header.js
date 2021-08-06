@@ -18,10 +18,12 @@ export default class Header extends Component {
         coins: 0,
         privateKey: '',
         publicKey: '',
-        chainStatus: 'Not Yet Active',
+        chainStatus: 'Buy Buy Buy!!!',
+        chainReady: true,
         buttonClass: 'active',
         buttonDisabled: false,
-        exchangeRate: 1
+        exchangeRate: 1,
+        wallets: [],
     }
     
     componentDidMount() {
@@ -33,7 +35,7 @@ export default class Header extends Component {
                 privateKey: data.privateKey
             })
         }.bind(this));
-        // this.getExchangeRate();
+        this.startQueryingSellers();
     }
 
     getExchangeRate = () => {
@@ -43,6 +45,21 @@ export default class Header extends Component {
                 exchangeRate: exchangeRate
             })
         }.bind(this), 5000)
+    }
+
+    startQueryingSellers = () => {
+        setInterval(this.getSellerInfo, 5000)
+    }
+
+    getSellerInfo = () => {
+        fetch('http://localhost:5000/wallets')
+        .then(response => response.json())
+        .then(function(wallets) {
+            const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
+            this.setState({
+                wallets: sortedWallets
+            })  
+        }.bind(this));
     }
 
     getRandomInt = (max) => {

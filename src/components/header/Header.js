@@ -21,6 +21,7 @@ export default class Header extends Component {
         chainStatus: 'Not Yet Active',
         buttonClass: 'active',
         buttonDisabled: false,
+        exchangeRate: 1
     }
     
     componentDidMount() {
@@ -31,7 +32,21 @@ export default class Header extends Component {
                 publicKey: data.publicKey,
                 privateKey: data.privateKey
             })
-        }.bind(this))
+        }.bind(this));
+        // this.getExchangeRate();
+    }
+
+    getExchangeRate = () => {
+        setInterval(function() {
+            const exchangeRate = this.state.exchangeRate + this.getRandomInt(3);
+            this.setState({
+                exchangeRate: exchangeRate
+            })
+        }.bind(this), 5000)
+    }
+
+    getRandomInt = (max) => {
+        return (Math.floor(Math.random() * max) / 10)
     }
 
     componentDidUpdate() {
@@ -77,7 +92,15 @@ export default class Header extends Component {
                     <div className="borderDiv"></div>
                     <Switch>
                         <Route path="/presale">
-                            <Presale buttonDisabled={this.state.buttonDisabled} class={this.state.buttonClass} increaseBalance={this.increaseBalance} balance={this.state.balance} coins={this.state.coins} chainStatus={this.state.chainStatus} />
+                            <Presale 
+                                buttonDisabled={this.state.buttonDisabled} 
+                                class={this.state.buttonClass} 
+                                increaseBalance={this.increaseBalance} 
+                                balance={this.state.balance} 
+                                coins={this.state.coins} 
+                                chainStatus={this.state.chainStatus} 
+                                exchangeRate={this.state.exchangeRate}
+                                />
                         </Route>
                         <Route path="/users">
                             <Users />

@@ -11,7 +11,15 @@ export default class Blockchain extends Component {
     componentDidMount() {
         fetch('http://localhost:5000/chain')
         .then(response => response.json())
-        .then(data => console.log(data));
+        .then(function(data) {
+            this.setState({
+                blockchain: data
+            })
+        }.bind(this));
+    }
+
+    componentDidUpdate() {
+        console.log(this.state)
     }
 
     render() {

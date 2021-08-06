@@ -16,10 +16,27 @@ export default class Header extends Component {
     state = {
         balance: 1000,
         coins: 0,
+        privateKey: '',
+        publicKey: '',
         chainStatus: 'Not Yet Active',
         buttonClass: 'active',
         buttonDisabled: false,
-    }   
+    }
+    
+    componentDidMount() {
+        fetch('http://localhost:5000/keys')
+        .then(response => response.json())
+        .then(function(data) {
+            this.setState({
+                publicKey: data.publicKey,
+                privateKey: data.privateKey
+            })
+        }.bind(this))
+    }
+
+    componentDidUpdate() {
+        console.log(this.state)
+    }
 
     increaseBalance = () => {
         const balance = this.state.balance + 5;

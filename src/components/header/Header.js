@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import title from './title.png';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
+import Blockchain from '../blockchain/Blockchain';
 
 import {
     BrowserRouter as Router,
@@ -15,13 +16,17 @@ export default class Header extends Component {
     state = {
         balance: 1000,
         coins: 0,
-        chainStatus: 'Not Yet Active'
-    }
+        chainStatus: 'Not Yet Active',
+        buttonClass: 'active',
+        buttonDisabled: false,
+    }   
 
     increaseBalance = () => {
         const balance = this.state.balance + 5;
         this.setState({
-            balance: balance
+            balance: balance,
+            // buttonClass: 'deactive',
+            // buttonDisabled: true,
         })
     }
 
@@ -46,7 +51,7 @@ export default class Header extends Component {
                                     <Link to="/users">Users</Link>
                                 </li>
                                 <li>
-                                    <Link to="/shh">Shh</Link>
+                                    <Link to="/blockchain">Blockchain</Link>
                                 </li>
                             </ul>
                         </nav>
@@ -55,13 +60,13 @@ export default class Header extends Component {
                     <div className="borderDiv"></div>
                     <Switch>
                         <Route path="/presale">
-                            <Presale increaseBalance={this.increaseBalance} balance={this.state.balance} coins={this.state.coins} chainStatus={this.state.chainStatus} />
+                            <Presale buttonDisabled={this.state.buttonDisabled} class={this.state.buttonClass} increaseBalance={this.increaseBalance} balance={this.state.balance} coins={this.state.coins} chainStatus={this.state.chainStatus} />
                         </Route>
                         <Route path="/users">
                             <Users />
                         </Route>
-                        <Route path="/shh">
-                            <Shh />
+                        <Route path="/blockchain">
+                            <Blockchain />
                         </Route>
                         <Route path="/">
                             <Home />
@@ -79,7 +84,7 @@ function Users() {
     return <h2>Users</h2>;
 }
 
-function Shh() {
-    console.log("INSIDE THE SECRET")
-    return <h2>Secret</h2>;
-}
+// function Shh() {
+//     console.log("INSIDE THE SECRET")
+//     return <h2>Secret</h2>;
+// }

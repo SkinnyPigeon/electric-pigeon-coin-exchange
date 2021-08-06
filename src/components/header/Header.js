@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import title from './title.png';
 import Home from '../home/Home';
+import Presale from '../presale/Presale';
 
 import {
     BrowserRouter as Router,
@@ -11,16 +12,12 @@ import {
 
 export default class Header extends Component {
     render() {
-        const borderStyle = {
-            borderBottom: "#994fd3 solid 2px",
-            // float: 'left'
-        }
         const textStyle = {
             fontFamily: 'riffic-bold'
         }
-        return <div>
+        return <div className="headerDiv">
             <Router>
-                <div>
+                <div className="routerDiv">
                     <div className="navHeader">
                         <img src={title} alt='Title'></img>
                         <nav className="item" >
@@ -29,7 +26,7 @@ export default class Header extends Component {
                                     <Link to="/">Home</Link>
                                 </li>
                                 <li>
-                                    <Link to="/about">About</Link>
+                                    <Link to="/presale">Presale</Link>
                                 </li>
                                 <li>
                                     <Link to="/users">Users</Link>
@@ -38,13 +35,16 @@ export default class Header extends Component {
                         </nav>
                     </div>
 
-                    <div style={borderStyle}></div>
+                    <div className="borderDiv"></div>
                     <Switch>
-                        <Route path="/about">
-                            <About />
+                        <Route path="/presale">
+                            <Presale />
                         </Route>
                         <Route path="/users">
                             <Users />
+                        </Route>
+                        <Route path="/shh">
+                            <Shh />
                         </Route>
                         <Route path="/">
                             <Home />
@@ -56,10 +56,13 @@ export default class Header extends Component {
     }
 }
 
-function About() {
-    return <h2>About</h2>;
-}
 
 function Users() {
+    console.log("INSIDE THE USERS")
     return <h2>Users</h2>;
+}
+
+function Shh() {
+    console.log("INSIDE THE SECRET")
+    return <h2>Secret</h2>;
 }

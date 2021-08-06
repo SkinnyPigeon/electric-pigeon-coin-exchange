@@ -37,6 +37,7 @@ html {
 
 ul {
   list-style-type: none; 
+  padding-right: 20px;
 }
 
 ul.links {
@@ -47,11 +48,11 @@ ul.links {
 nav {
   display: flex;
   align-items: center;
-  right: 0;
 }
 
 li {
   font-family: 'riffic-bold';
+  padding-right: 20px;
 }
 
 a {
@@ -59,6 +60,6 @@ a {
 }
 
 .navHeader { 
-  display: inline-flex;
+  display: flex;
+  justify-content: space-between;
 }
-

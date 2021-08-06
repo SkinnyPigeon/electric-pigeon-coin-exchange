@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import title from './title.png';
+import Home from '../home/Home';
 
 import {
     BrowserRouter as Router,
@@ -22,7 +23,7 @@ export default class Header extends Component {
                 <div>
                     <div className="navHeader">
                         <img src={title} alt='Title'></img>
-                        <nav >
+                        <nav className="item" >
                             <ul className='links' style={textStyle}>
                                 <li>
                                     <Link to="/">Home</Link>
@@ -46,7 +47,7 @@ export default class Header extends Component {
                             <Users />
                         </Route>
                         <Route path="/">
-                            {/* <Home /> */}
+                            <Home />
                         </Route>
                     </Switch>
                 </div>
@@ -54,10 +55,6 @@ export default class Header extends Component {
         </div>
     }
 }
-
-// function Home() {
-//     return <Header />
-// }
 
 function About() {
     return <h2>About</h2>;

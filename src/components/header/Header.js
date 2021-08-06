@@ -3,6 +3,7 @@ import title from './title.png';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
+// import Sellers from '../sellers/Sellers';
 
 import {
     BrowserRouter as Router,
@@ -23,23 +24,24 @@ export default class Header extends Component {
         buttonClass: 'active',
         buttonDisabled: false,
         exchangeRate: 1,
-        wallets: [],
+        sellers: [],
+        topSellers: [],
     }
-    
+
     componentDidMount() {
         fetch('http://localhost:5000/keys')
-        .then(response => response.json())
-        .then(function(data) {
-            this.setState({
-                publicKey: data.publicKey,
-                privateKey: data.privateKey
-            })
-        }.bind(this));
-        this.startQueryingSellers();
+            .then(response => response.json())
+            .then(function (data) {
+                this.setState({
+                    publicKey: data.publicKey,
+                    privateKey: data.privateKey
+                })
+            }.bind(this));
+        this.getSellerInfo();
     }
 
     getExchangeRate = () => {
-        setInterval(function() {
+        setInterval(function () {
             const exchangeRate = this.state.exchangeRate + this.getRandomInt(3);
             this.setState({
                 exchangeRate: exchangeRate
@@ -53,22 +55,23 @@ export default class Header extends Component {
 
     getSellerInfo = () => {
         fetch('http://localhost:5000/wallets')
-        .then(response => response.json())
-        .then(function(wallets) {
-            const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
-            this.setState({
-                wallets: sortedWallets
-            })  
-        }.bind(this));
+            .then(response => response.json())
+            .then(function (wallets) {
+                const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
+                const topSellers = sortedWallets.slice(0, 5);
+                this.setState({
+                    sellers: topSellers
+                })
+            }.bind(this));
     }
 
     getRandomInt = (max) => {
         return (Math.floor(Math.random() * max) / 10)
     }
 
-    componentDidUpdate() {
-        console.log(this.state)
-    }
+    // componentDidUpdate() {
+    //     console.log(this.state)
+    // }
 
     increaseBalance = () => {
         const balance = this.state.balance + 5;
@@ -109,15 +112,21 @@ export default class Header extends Component {
                     <div className="borderDiv"></div>
                     <Switch>
                         <Route path="/presale">
-                            <Presale 
-                                buttonDisabled={this.state.buttonDisabled} 
-                                class={this.state.buttonClass} 
-                                increaseBalance={this.increaseBalance} 
-                                balance={this.state.balance} 
-                                coins={this.state.coins} 
-                                chainStatus={this.state.chainStatus} 
-                                exchangeRate={this.state.exchangeRate}
+                            <div>
+                                <Presale
+                                    buttonDisabled={this.state.buttonDisabled}
+                                    class={this.state.buttonClass}
+                                    increaseBalance={this.increaseBalance}
+                                    balance={this.state.balance}
+                                    coins={this.state.coins}
+                                    chainStatus={this.state.chainStatus}
+                                    exchangeRate={this.state.exchangeRate}
+                                    sellers={this.state.sellers}
                                 />
+                                {/* <Sellers
+                                    sellers={this.state.sellers}
+                                /> */}
+                            </div>
                         </Route>
                         <Route path="/users">
                             <Users />
@@ -140,8 +149,3 @@ function Users() {
     console.log("INSIDE THE USERS")
     return <h2>Users</h2>;
 }
-
-// function Shh() {
-//     console.log("INSIDE THE SECRET")
-//     return <h2>Secret</h2>;
-// }

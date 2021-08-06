@@ -93,6 +93,8 @@ a:hover {
   height: 100%;
 }
 
+
+
 .balanceContainer {
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%);
@@ -129,4 +131,31 @@ button.deactive {
   background-color: #b884e0;
   color: white;
   font-family: 'riffic-bold';
+}
+
+
+.sellerDiv {
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%);
+  height: fit-content;
+  width: fit-content;
+  border-radius: 20px;
+  position: absolute;
+  left: 30px;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.sellingDiv {
+  font-family: 'Amatic SC', cursive;
+  font-size: 2em;
+  padding: 10px 20px 10px 20px;
+  margin: 0;
+  border-bottom: 2px solid #994fd3;
+}
+
+.sellingDiv:last-child { border-bottom: none; }
+
+.sellerDiv p {
+  margin: 0;
 }

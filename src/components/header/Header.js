@@ -11,6 +11,20 @@ import {
 } from "react-router-dom";
 
 export default class Header extends Component {
+
+    state = {
+        balance: 1000,
+        coins: 0,
+        chainStatus: 'Not Yet Active'
+    }
+
+    increaseBalance = () => {
+        const balance = this.state.balance + 5;
+        this.setState({
+            balance: balance
+        })
+    }
+
     render() {
         const textStyle = {
             fontFamily: 'riffic-bold'
@@ -31,6 +45,9 @@ export default class Header extends Component {
                                 <li>
                                     <Link to="/users">Users</Link>
                                 </li>
+                                <li>
+                                    <Link to="/shh">Shh</Link>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -38,7 +55,7 @@ export default class Header extends Component {
                     <div className="borderDiv"></div>
                     <Switch>
                         <Route path="/presale">
-                            <Presale />
+                            <Presale increaseBalance={this.increaseBalance} balance={this.state.balance} coins={this.state.coins} chainStatus={this.state.chainStatus} />
                         </Route>
                         <Route path="/users">
                             <Users />

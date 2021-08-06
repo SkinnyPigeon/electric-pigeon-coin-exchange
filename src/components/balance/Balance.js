@@ -6,6 +6,7 @@ export default class Balance extends Component {
             <div className="balanceContainer">
                 <p className="balanceText">Balance: £{this.props.balance}</p>
                 <p className="balanceText">Coins: {this.props.coins}</p>
+                <p className="balanceText">Chain Status: {this.props.chainStatus}</p>
             </div>
         )
     }

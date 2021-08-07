@@ -21,13 +21,14 @@ export default class Header extends Component {
         publicKey: '',
         chainStatus: 'Buy Buy Buy!!!',
         chainReady: true,
-        buttonClass: 'active',
-        buttonDisabled: false,
         exchangeRate: 1,
         sellers: [],
         topSellers: [],
         selectedSeller: '',
-        selectedSellerBalance: 0.0
+        selectedSellerBalance: 0,
+        purchaseAmount: '',
+        buyButtonClass: 'buy',
+        cancelButtonClass: 'cancel',
     }
 
     componentDidMount() {
@@ -42,9 +43,9 @@ export default class Header extends Component {
         this.getSellerInfo();
     }
 
-    // componentDidUpdate() {
-    //     console.log(this.state)
-    // }
+    componentDidUpdate() {
+        console.log(this.state)
+    }
 
     getExchangeRate = () => {
         setInterval(function () {
@@ -91,17 +92,49 @@ export default class Header extends Component {
         })
     }
 
+    selectPurchaseAmount = (e) => {
+        const purchaseAmount = e.target.value > 0 ? parseFloat(e.target.value) : '';
+        this.setState({
+            purchaseAmount: purchaseAmount
+        })
+    }
+
+    makePurchase = () => {
+        if( this.state.selectedSeller !== '' && 
+            this.state.purchaseAmount > 0 && 
+            this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
+            this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
+            this.state.balance > 0) {
+            const transaction = { 
+                seller: this.state.selectedSeller,
+                buyer: this.state.publicKey,
+                amount: this.state.purchaseAmount
+            };
+            console.log(transaction)
+
+            fetch('http://localhost:5000/buy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(transaction)
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+        }
+    }
+
+ 
+
+    cancelPurchase = () => {
+        this.setState({
+            purchaseAmount: '',
+            selectedSeller: '',
+            selectedSellerBalance: 0
+        })
+    }
    
-
-
-    // increaseBalance = () => {
-    //     const balance = this.state.balance + 5;
-    //     this.setState({
-    //         balance: balance,
-            // buttonClass: 'deactive',
-            // buttonDisabled: true,
-    //     })
-    // }
 
     render() {
         return <div className="headerDiv">
@@ -118,9 +151,6 @@ export default class Header extends Component {
                                     <Link to="/presale">Presale</Link>
                                 </li>
                                 <li>
-                                    <Link to="/users">Users</Link>
-                                </li>
-                                <li>
                                     <Link to="/blockchain">Blockchain</Link>
                                 </li>
                             </ul>
@@ -132,21 +162,26 @@ export default class Header extends Component {
                         <Route path="/presale">
                             <div>
                                 <Presale
-                                    buttonDisabled={this.state.buttonDisabled}
-                                    class={this.state.buttonClass}
-                                    // increaseBalance={this.increaseBalance}
                                     balance={this.state.balance}
                                     coins={this.state.coins}
                                     chainStatus={this.state.chainStatus}
                                     exchangeRate={this.state.exchangeRate}
+
                                     sellers={this.state.sellers}
                                     selectSeller={this.selectSeller}
                                     selectedSeller={this.state.selectedSeller}
+
+                                    purchaseAmount={this.state.purchaseAmount}
+                                    selectPurchaseAmount={this.selectPurchaseAmount}
+
+                                    buyButtonClass={this.state.buyButtonClass}
+                                    makePurchase={this.makePurchase}
+
+                                    cancelButtonClass={this.state.cancelButtonClass}
+                                    cancelPurchase={this.cancelPurchase}
+
                                 />
                             </div>
-                        </Route>
-                        <Route path="/users">
-                            <Users />
                         </Route>
                         <Route path="/blockchain">
                             <Blockchain />
@@ -159,10 +194,4 @@ export default class Header extends Component {
             </Router>
         </div>
     }
-}
-
-
-function Users() {
-    console.log("INSIDE THE USERS")
-    return <h2>Users</h2>;
 }

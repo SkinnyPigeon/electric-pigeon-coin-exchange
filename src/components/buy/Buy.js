@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../button/Button';
 
 export default class Buy extends Component {
     render () {
@@ -6,11 +7,33 @@ export default class Buy extends Component {
             <div className="buyDiv">
                 <div className="buyCoinDiv">
                     <p>How many coins? </p>
-                    <input type="float" placeholder="0.00"></input>
+                    <input 
+                        type="number" 
+                        placeholder='0.00'
+                        onChange={this.props.selectPurchaseAmount}
+                        value={this.props.purchaseAmount}
+                    >
+                    </input>
                 </div>
                 <div className="buySellerDiv">
                     <p>Seller: </p>
                     <p>{this.props.selectedSeller.substring(60, 75)}</p>
+                </div>
+                <div className="buyButtonDiv">
+                    <div id="buyButton">
+                        <Button 
+                            buttonText="Buy!"
+                            class={this.props.buyButtonClass}
+                            action={this.props.makePurchase}
+                        />
+                    </div>
+                    <div id="cancelBuyDiv">
+                        <Button 
+                            buttonText="Cancel"
+                            class={this.props.cancelButtonClass}
+                            action={this.props.cancelPurchase}
+                        />
+                    </div>
                 </div>
             </div>
         )

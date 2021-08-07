@@ -123,6 +123,7 @@ button {
   border-radius: 10px;
   padding: 10px;
   margin: 5px;
+  width: 10em;
 }
 
 button.active {
@@ -133,6 +134,19 @@ button.active {
 
 button.deactive {
   background-color: #b884e0;
+  color: white;
+  font-family: 'riffic-bold';
+}
+
+button.buy {
+  background-color: #1f7ead;
+  color: black;
+  font-family: 'riffic-bold';
+  
+}
+
+button.cancel {
+  background-color: #d8096c;
   color: white;
   font-family: 'riffic-bold';
 }
@@ -199,7 +213,11 @@ button.deactive {
 .buyCoinDiv input {
   height: 2em;
   margin: 0;
-  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  width: 20%;
 }
 
 .buySellerDiv {
@@ -211,4 +229,10 @@ button.deactive {
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.buyButtonDiv {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }

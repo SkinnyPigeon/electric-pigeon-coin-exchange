@@ -21,13 +21,17 @@ export default class Presale extends Component {
                 />
                 <Buy 
                     selectedSeller={this.props.selectedSeller}
+
+                    purchaseAmount={this.props.purchaseAmount}
+                    selectPurchaseAmount={this.props.selectPurchaseAmount}
+
+                    buyButtonClass={this.props.buyButtonClass}
+                    makePurchase={this.props.makePurchase}
+                    
+                    cancelButtonClass={this.props.cancelButtonClass}
+                    cancelPurchase={this.props.cancelPurchase}
+
                 />
-                {/* <Button 
-                    buttonDisabled={this.props.buttonDisabled} 
-                    class={this.props.class} 
-                    action={this.props.increaseBalance} 
-                    buttonText={"Click ME"}
-                /> */}
             </div>
         )
     }

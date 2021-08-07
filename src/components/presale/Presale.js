@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Balance from '../balance/Balance';
 import Sellers from '../sellers/Sellers';
+import Buy from '../buy/Buy';
 // import Button from '../button/Button';
 
 export default class Presale extends Component {
@@ -16,6 +17,10 @@ export default class Presale extends Component {
                 />
                 <Sellers
                     sellers={this.props.sellers}
+                    selectSeller={this.props.selectSeller}
+                />
+                <Buy 
+                    selectedSeller={this.props.selectedSeller}
                 />
                 {/* <Button 
                     buttonDisabled={this.props.buttonDisabled} 

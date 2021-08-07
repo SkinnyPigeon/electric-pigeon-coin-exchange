@@ -70,6 +70,10 @@ li {
   padding-right: 20px;
 }
 
+.links {
+  font-family: 'riffic-bold';
+}
+
 a {
   color: #b884e0;
   text-decoration: none;
@@ -158,4 +162,53 @@ button.deactive {
 
 .sellerDiv p {
   margin: 0;
+}
+
+.sellingDiv:hover {
+  cursor: pointer;
+}
+
+.buyDiv {
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%);
+  height: fit-content;
+  width: 70%;
+  border-radius: 20px;
+  position: absolute;
+  left: 15%;
+  bottom: 30px;
+  text-align: left;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2em;
+}
+
+.buyCoinDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buyCoinDiv p {
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.buyCoinDiv input {
+  height: 2em;
+  margin: 0;
+  margin-left: 20px;
+}
+
+.buySellerDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buySellerDiv p {
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }

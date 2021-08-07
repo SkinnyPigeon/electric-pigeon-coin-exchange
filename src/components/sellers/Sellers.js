@@ -17,7 +17,6 @@ export default class Sellers extends Component {
     componentDidUpdate(prevProps) {
         let oldSellers = []
         let newSellers = []
-        console.log(this.state)
         prevProps.sellers.forEach(seller => {
             oldSellers.push(this.sortSellerKeys(seller))
         });
@@ -26,7 +25,6 @@ export default class Sellers extends Component {
         });
         if (JSON.stringify(oldSellers) !== JSON.stringify(newSellers)) {
             const display = this.generateSellerDisplay(this.props.sellers)
-            console.log("UPDATING THE SELLERS")
             this.setState({
                 sellers: this.props.sellers,
                 display: display,
@@ -37,13 +35,12 @@ export default class Sellers extends Component {
     generateSellerDisplay = (sellers) => {
         const display = <div className="sellerDiv">
             {sellers.map((seller, index) => {
-                return <div key={index} className="sellingDiv">
-                    <p>Seller: {seller.account.substring(0,15)}</p>
-                    <p>Selling: {seller.balance.toFixed(2)}</p>
+                return <div key={index} className="sellingDiv" onClick={this.props.selectSeller}>
+                    <p id={seller.account}>Seller: {seller.account.substring(60,75)}</p>
+                    <p id={seller.balance}>Selling: {seller.balance.toFixed(2)}</p>
                 </div>
             })}
         </div>
-        console.log(display)
         return display;
     }
 

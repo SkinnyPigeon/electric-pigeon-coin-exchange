@@ -29,6 +29,7 @@ export default class Header extends Component {
         purchaseAmount: '',
         buyButtonClass: 'buy',
         cancelButtonClass: 'cancel',
+        walletID: 0,
     }
 
     componentDidMount() {
@@ -36,6 +37,7 @@ export default class Header extends Component {
             .then(response => response.json())
             .then(function (data) {
                 this.setState({
+                    walletID: data.id,
                     publicKey: data.publicKey,
                     privateKey: data.privateKey
                 })
@@ -106,6 +108,7 @@ export default class Header extends Component {
             this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
             this.state.balance > 0) {
             const transaction = { 
+                id: this.state.walletID,
                 seller: this.state.selectedSeller,
                 buyer: this.state.publicKey,
                 amount: this.state.purchaseAmount

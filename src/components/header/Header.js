@@ -5,6 +5,7 @@ import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
 // import Sellers from '../sellers/Sellers';
 
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -30,6 +31,7 @@ export default class Header extends Component {
         buyButtonClass: 'buy',
         cancelButtonClass: 'cancel',
         walletID: 0,
+        burgerMenuViewable: false,
     }
 
     componentDidMount() {
@@ -139,6 +141,22 @@ export default class Header extends Component {
             selectedSellerBalance: 0
         })
     }
+
+    showBurgerMenu = () => {
+        const menu = document.getElementById('burgerLinks');
+        if (!this.state.burgerMenuViewable) {
+            menu.style.display = 'block'
+            this.setState({
+                burgerMenuViewable: true
+            })
+        } else {
+            menu.style.display = 'none'
+            this.setState({
+                burgerMenuViewable: false
+            })
+        }
+
+    }
    
 
     render() {
@@ -147,12 +165,12 @@ export default class Header extends Component {
                 <div className="routerDiv">
                     <div className="navHeader">
                         <div className="titleDiv"></div>
-                        <div className="burgerMenu">
+                        <div className="burgerMenu" onClick={() => this.showBurgerMenu()}>
                             <div className="burger"></div>
                             <div className="burger"></div>
                             <div className="burger"></div>
                         </div>
-                        <nav className="item">
+                        <nav className="navLinks">
                             <ul className='links'>
                                 <li>
                                     <Link to="/">Home</Link>
@@ -165,9 +183,23 @@ export default class Header extends Component {
                                 </li>
                             </ul>
                         </nav>
+                        
                     </div>
 
                     <div className="borderDiv"></div>
+                    <nav id="burgerLinks" className="burgerLinks">
+                            <ul className='burgerLinksList'>
+                                <li>
+                                    <Link to="/">Home</Link>
+                                </li>
+                                <li>
+                                    <Link to="/presale">Presale</Link>
+                                </li>
+                                <li>
+                                    <Link to="/blockchain">Blockchain</Link>
+                                </li>
+                            </ul>
+                        </nav>
                     <Switch>
                         <Route path="/presale">
                             <div>

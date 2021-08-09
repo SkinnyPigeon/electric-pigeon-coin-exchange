@@ -113,7 +113,10 @@ nav {
   .burgerMenu:hover {
     cursor: pointer;
   }
-  nav.item {
+  nav.navLinks {
+    display: none;
+  }
+  .burgerLinks {
     display: none;
   }
 }

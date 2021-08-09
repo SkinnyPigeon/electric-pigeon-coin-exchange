@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import title from './title.png';
+// import title from './title.png';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
@@ -146,7 +146,12 @@ export default class Header extends Component {
             <Router>
                 <div className="routerDiv">
                     <div className="navHeader">
-                        <img src={title} alt='Title'></img>
+                        <div className="titleDiv"></div>
+                        <div className="burgerMenu">
+                            <div className="burger"></div>
+                            <div className="burger"></div>
+                            <div className="burger"></div>
+                        </div>
                         <nav className="item">
                             <ul className='links'>
                                 <li>

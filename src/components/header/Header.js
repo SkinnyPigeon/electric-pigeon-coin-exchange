@@ -144,18 +144,12 @@ export default class Header extends Component {
 
     showBurgerMenu = () => {
         const menu = document.getElementById('burgerLinks');
-        if (!this.state.burgerMenuViewable) {
-            menu.style.display = 'block'
-            this.setState({
-                burgerMenuViewable: true
-            })
-        } else {
-            menu.style.display = 'none'
-            this.setState({
-                burgerMenuViewable: false
-            })
-        }
+        menu.style.width = '250px';
+    }
 
+    hideBurgerMenu = () => {
+        const menu = document.getElementById('burgerLinks');
+        menu.style.width = '0';
     }
    
 
@@ -188,18 +182,19 @@ export default class Header extends Component {
 
                     <div className="borderDiv"></div>
                     <nav id="burgerLinks" className="burgerLinks">
-                            <ul className='burgerLinksList'>
-                                <li>
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/presale">Presale</Link>
-                                </li>
-                                <li>
-                                    <Link to="/blockchain">Blockchain</Link>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div className="closeBurgerMenu" onClick={() => this.hideBurgerMenu()}>&times;</div>
+                        <ul className='burgerLinksList'>
+                            <li>
+                                <Link to="/">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/presale">Presale</Link>
+                            </li>
+                            <li>
+                                <Link to="/blockchain">Blockchain</Link>
+                            </li>
+                        </ul>
+                    </nav>
                     <Switch>
                         <Route path="/presale">
                             <div>

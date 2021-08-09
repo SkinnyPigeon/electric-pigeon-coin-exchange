@@ -142,6 +142,10 @@ nav {
     margin-right: 50px;
     color: #818181;
   }
+
+  .burgerLinks li {
+    padding-top: 20px;
+  }
 }
 
 

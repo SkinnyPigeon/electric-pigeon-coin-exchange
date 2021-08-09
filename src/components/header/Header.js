@@ -43,6 +43,7 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
+        // this.startQueryingSellers()
     }
 
     componentDidUpdate() {
@@ -69,7 +70,7 @@ export default class Header extends Component {
     }
 
     startQueryingSellers = () => {
-        setInterval(this.getSellerInfo, 5000)
+        setInterval(this.getSellerInfo, 1000)
     }
 
     getSellerInfo = () => {
@@ -77,7 +78,8 @@ export default class Header extends Component {
         .then(response => response.json())
         .then(function (wallets) {
             const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
-            const topSellers = sortedWallets.slice(0, 5);
+            // const topSellers = sortedWallets.slice(0, 3);
+            const topSellers = sortedWallets;
             this.setState({
                 sellers: topSellers
             })

@@ -188,20 +188,10 @@ a:hover {
   overflow: scroll;
 }
 
-.sellingDiv:nth-child(n+4) {
-  /* display: none; */
-}
-
 .sellingDiv p {
   margin: 0;
 }
 
-
-
-
-/* .sellerDiv:nth-child(4){
-  display: none;
-} */
 
 .sellingDiv:last-child { border-bottom: none; }
 
@@ -211,22 +201,21 @@ a:hover {
 }
 
 
-
-
-
 /******************BUYING**************/
 
 .buyDiv {
-  /* background: rgb(255,255,255); */
-  /* background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%); */
-  /* height: fit-content; */
-  /* width: 70%; */
-  /* border-radius: 20px; */
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%);
+  height: fit-content;
+  width: 70%;
+  border-radius: 20px;
+  /* display: flex; */
+
   /* position: absolute; */
   /* left: 15%; */
   /* bottom: 30px; */
   /* text-align: left; */
-  /* margin: 0 auto; */
+  margin: 0 auto;
   /* margin-top: 30px; */
   /* font-family: 'Amatic SC', cursive; */
   /* font-size: 2em; */

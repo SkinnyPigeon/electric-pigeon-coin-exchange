@@ -17,7 +17,8 @@ export default class Header extends Component {
 
     state = {
         balance: 1000,
-        coins: 0,
+        coinsOwned: 0,
+        coinsPending: 0,
         privateKey: '',
         publicKey: '',
         chainStatus: 'Buy Buy Buy!!!',
@@ -45,12 +46,12 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
-        // this.startQueryingSellers()
+        // this.startQueryingBlockchain()
     }
 
-    componentDidUpdate() {
-        console.log(this.state)
-    }
+    // componentDidUpdate() {
+    //     console.log(this.state)
+    // }
 
     getExchangeRate = () => {
         setInterval(function () {
@@ -71,8 +72,9 @@ export default class Header extends Component {
         return growth
     }
 
-    startQueryingSellers = () => {
-        setInterval(this.getSellerInfo, 1000)
+    startQueryingBlockchain = () => {
+        setInterval(this.getSellerInfo, 5000);
+        setInterval(this.getUserBalance, 5000)
     }
 
     getSellerInfo = () => {
@@ -80,12 +82,34 @@ export default class Header extends Component {
         .then(response => response.json())
         .then(function (wallets) {
             const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
-            // const topSellers = sortedWallets.slice(0, 3);
             const topSellers = sortedWallets;
             this.setState({
                 sellers: topSellers
             })
         }.bind(this));
+    }
+
+    getUserBalance = () => {
+        const user = {
+            public_key: this.state.publicKey
+        }
+        fetch('http://localhost:5000/balance', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(function(data) {
+            const difference = data.balance - this.state.coinsOwned;
+            const coinsPending = this.state.coinsPending - difference 
+            this.setState({
+                coinsOwned: data.balance,
+                coinsPending: coinsPending
+            })
+        }.bind(this))
+        .catch(error => console.log(error))
     }
 
     selectSeller = (e) => {
@@ -127,7 +151,13 @@ export default class Header extends Component {
                 body: JSON.stringify(transaction)
             })
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(function(data) {
+                const coinsPending = this.state.coinsPending + this.state.purchaseAmount;
+                this.setState({
+                    coinsPending: coinsPending
+                })
+                this.cancelPurchase();
+            }.bind(this))
             .catch(error => console.log(error))
         }
     }
@@ -200,7 +230,8 @@ export default class Header extends Component {
                             <div>
                                 <Presale
                                     balance={this.state.balance}
-                                    coins={this.state.coins}
+                                    coinsOwned={this.state.coinsOwned}
+                                    coinsPending={this.state.coinsPending}
                                     chainStatus={this.state.chainStatus}
                                     exchangeRate={this.state.exchangeRate}
 

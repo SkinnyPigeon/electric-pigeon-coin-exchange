@@ -147,6 +147,11 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.sellersAndBalanceText {
+  text-align: center;
+  font-family: 'riffic-bold';
+}
+
 
 .borderDiv {
   border-bottom: #994fd3 solid 2px;
@@ -163,10 +168,16 @@ a:hover {
   margin-top: 20px;
 }
 
+.balanceContainer p {
+  margin: 0;
+}
+
 .balanceText {
   font-family: 'Amatic SC', cursive;
   font-size: 2em;
 }
+
+
 
 .sellingDiv {
   font-family: 'Amatic SC', cursive;
@@ -188,6 +199,12 @@ a:hover {
   overflow: scroll;
 }
 
+@media (max-width: 800px) {
+  .sellerDiv {
+    height: 6em;
+  }
+}
+
 .sellingDiv p {
   margin: 0;
 }
@@ -207,57 +224,71 @@ a:hover {
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,0) 0%, rgba(184,132,224,0.5) 100%);
   height: fit-content;
-  width: 70%;
+  width: 50%;
   border-radius: 20px;
-  /* display: flex; */
-
-  /* position: absolute; */
-  /* left: 15%; */
-  /* bottom: 30px; */
-  /* text-align: left; */
   margin: 0 auto;
-  /* margin-top: 30px; */
-  /* font-family: 'Amatic SC', cursive; */
-  /* font-size: 2em; */
+  margin-top: 20px;
+  font-family: 'Amatic SC', cursive;
+  font-size: 2em;
+  padding: 10px;
+}
+
+@media (max-width: 800px) {
+  .buyDiv {
+    width: fit-content;
+    padding: 5px;
+  }
 }
 
 .buyCoinDiv {
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buyCoinDiv p {
-  /* margin: 0; */
-  /* padding-left: 20px; */
-  /* padding-right: 20px; */
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .buyCoinDiv input {
-  /* height: 2em; */
-  /* margin: 0; */
-  /* margin-right: 20px; */
-  /* border-radius: 10px; */
-  /* text-align: center; */
+  height: 2em;
+  margin: 0;
+  margin-right: 20px;
+  border-radius: 10px;
+  text-align: center;
   font-family: 'Amatic SC', cursive;
-  /* width: 20%; */
+  width: 15%;
+}
+
+@media (max-width: 800px) {
+  .buyCoinDiv input {
+    width: 20%;
+  }
+
+  .buyCoinDiv p {
+    padding-right: 0;
+  }
 }
 
 .buySellerDiv {
-  /* display: flex; */
-  /* justify-content: space-between; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .buySellerDiv p {
-  /* margin: 0; */
-  /* padding-left: 20px; */
-  /* padding-right: 20px; */
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .buyButtonDiv {
-  /* display: flex; */
-  /* justify-content: space-evenly; */
-  /* align-items: center; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 /*****************BUTTONS************/
@@ -268,6 +299,7 @@ button {
   margin: 5px;
   width: 10em;
 }
+
 
 button.active {
   background-color: #994fd3;

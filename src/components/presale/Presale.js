@@ -10,16 +10,23 @@ export default class Presale extends Component {
         return (
             <div className="presaleDiv">
                 <div className="sellersAndBalance">
-                    <Sellers
-                        sellers={this.props.sellers}
-                        selectSeller={this.props.selectSeller}
-                    />
-                    <Balance 
-                        balance={this.props.balance} 
-                        coins={this.props.coins} 
-                        chainStatus={this.props.chainStatus}
-                        exchangeRate={this.props.exchangeRate}
-                    />
+                    <div>
+                        <h3 className="sellersAndBalanceText">Top Sellers</h3>
+                        <Sellers
+                            sellers={this.props.sellers}
+                            selectSeller={this.props.selectSeller}
+                        />
+                    </div>
+                    <div>
+                        <h3 className="sellersAndBalanceText">Your Wallet</h3>
+                        <Balance 
+                            balance={this.props.balance} 
+                            coins={this.props.coins} 
+                            chainStatus={this.props.chainStatus}
+                            exchangeRate={this.props.exchangeRate}
+                        />
+                    </div>
+                    
                 </div>
                 
                 

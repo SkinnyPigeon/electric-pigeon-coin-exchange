@@ -9,7 +9,8 @@ export default class Balance extends Component {
                 <p className="balanceText">Coins Owned: {this.props.coinsOwned}</p>
                 <p className="balanceText">Coins Pending: {this.props.coinsPending}</p>
                 <p className="balanceText">Exchange Rate: {this.props.exchangeRate}</p>
-                <p className="balanceText">Chain Status: {this.props.chainStatus}</p>
+                {/* <p className="balanceText">Chain Status: {this.props.chainStatus}</p> */}
+                <p className="balanceText">Value of coins: £{this.props.exchangeRate * this.props.coinsOwned}</p>
             </div>
         )
     }

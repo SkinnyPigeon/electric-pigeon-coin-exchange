@@ -5,7 +5,7 @@ export default class Buy extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.likeTheCoinDifference !== this.props.likeTheCoinDifference) {
-            this.clearOldLikes()
+            this.clearOldLikes();
             console.log('New count difference: ', this.props.likeTheCoinDifference);
             const likeDiv = document.getElementById('likeDiv');
             const likeButton = document.getElementById('likeTheCoinDiv');
@@ -26,7 +26,7 @@ export default class Buy extends Component {
                     const xRand = Math.floor(Math.random() * 50 + 1);
                     const xPositivity = Math.round(Math.random()) ? 1 : -1;
                     like.style.setProperty('--x-drift', (xRand * xPositivity) + 'px');
-                    likeDiv.appendChild(like)
+                    likeDiv.appendChild(like);
                 }, 200 * id)
             })
         }
@@ -34,8 +34,10 @@ export default class Buy extends Component {
 
     clearOldLikes = () => {
         const likeDiv = document.getElementById('likeDiv');
-        while(likeDiv.firstChild) {
-            likeDiv.removeChild(likeDiv.lastChild)
+        if (likeDiv.childElementCount > 150) {
+            while(likeDiv.firstChild) {
+                likeDiv.removeChild(likeDiv.lastChild);
+            }
         }
     }
 

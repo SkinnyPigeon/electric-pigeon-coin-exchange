@@ -44,6 +44,10 @@ export default class Presale extends Component {
                     cancelButtonClass={this.props.cancelButtonClass}
                     cancelPurchase={this.props.cancelPurchase}
 
+                    likeTheCoinClass={this.props.likeTheCoinClass}
+                    likeTheCoin={this.props.likeTheCoin}
+                    likeTheCoinDifference={this.props.likeTheCoinDifference}
+
                 />
             </div>
         )

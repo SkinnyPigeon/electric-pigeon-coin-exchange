@@ -31,8 +31,12 @@ export default class Header extends Component {
         purchaseAmount: '',
         buyButtonClass: 'buy',
         cancelButtonClass: 'cancel',
+        likeTheCoinClass: 'like',
         walletID: 0,
         burgerMenuViewable: false,
+        likeCount: 0,
+        likeTheCoinDifference: 0,
+        intervals: [],
     }
 
     componentDidMount() {
@@ -46,12 +50,55 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
-        this.startQueryingBlockchain()
+        this.startQueryingBlockchain();
     }
 
     // componentDidUpdate() {
     //     console.log(this.state)
     // }
+
+    likeTheCoin = () => {
+        fetch('/add_like')
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }
+
+    getLikeCount = () => {
+        const like = {
+            'table': 'likes'
+        }
+        fetch('/get_counts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(like)
+        })
+        .then(response => response.json())
+        .then(function(data) {
+            const likeCount = this.state.likeCount;
+            if(likeCount > 0) {
+                const newLikeCount = data['message'];
+                if(Number.isInteger(newLikeCount)) {
+                    if(newLikeCount > likeCount) {
+                        console.log('UPDATING THE LIKE COUNT')
+                        const difference = newLikeCount - likeCount;
+                        this.setState({
+                            likeCount: newLikeCount,
+                            likeTheCoinDifference: difference
+                        })
+                    }
+                }
+            } else {
+                if(Number.isInteger(data['message'])) {
+                    console.log('SETTING LIKE COUNT FOR THE FIRST TIME')
+                    this.setState({
+                        likeCount: data['message']
+                    });
+                }
+            }
+        }.bind(this));
+    }
 
     getExchangeRate = () => {
         setInterval(function () {
@@ -73,12 +120,22 @@ export default class Header extends Component {
     }
 
     startQueryingBlockchain = () => {
-        setInterval(this.getSellerInfo, 5000);
-        setInterval(this.getUserBalance, 5000)
+        const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
+        const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
+        const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
+        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID]
+        this.setState({
+            intervals: intervals
+        });
+    }
+
+    componentWillUnmount() {
+        this.state.intervals.forEach(interval => {
+            clearInterval(interval)
+        })
     }
 
     getSellerInfo = () => {
-        console.log("HELLO")
         fetch('/wallets')
         .then(response => response.json())
         .then(function (wallets) {
@@ -94,7 +151,7 @@ export default class Header extends Component {
         const user = {
             public_key: this.state.publicKey
         }
-        fetch('balance', {
+        fetch('/balance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +161,8 @@ export default class Header extends Component {
         .then(response => response.json())
         .then(function(data) {
             const difference = data.balance - this.state.coinsOwned;
-            const coinsPending = this.state.coinsPending - difference 
+            let coinsPending = this.state.coinsPending - difference;
+            coinsPending = coinsPending < 0 ? 0 : coinsPending;
             this.setState({
                 coinsOwned: data.balance,
                 coinsPending: coinsPending
@@ -249,6 +307,10 @@ export default class Header extends Component {
 
                                     cancelButtonClass={this.state.cancelButtonClass}
                                     cancelPurchase={this.cancelPurchase}
+
+                                    likeTheCoinClass={this.state.likeTheCoinClass}
+                                    likeTheCoin={this.likeTheCoin}
+                                    likeTheCoinDifference={this.state.likeTheCoinDifference}
 
                                 />
                             </div>

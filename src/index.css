@@ -34,6 +34,8 @@ html {
 }
 
 
+
+
 /*****************NAVBAR****************/
 
 .navHeader { 
@@ -326,3 +328,58 @@ button.cancel {
   font-family: 'riffic-bold';
 }
 
+button.like {
+  background-color: #994fd3;
+}
+
+/************Likes**********/
+
+#likeDiv {
+  position: absolute;
+}
+
+:root {
+  --animation-time: 2s;
+  --x-coords: 0;
+  --y-coords: 0;
+  --x-drift: 20px;
+  --y-half-drift: -50px;
+  --y-full-drift: -100px; 
+}
+
+.floatingLikes {
+  animation: 
+    float var(--animation-time) linear, 
+    fading var(--animation-time) linear, 
+    vanish var(--animation-time) linear;
+  animation-fill-mode: forwards;
+  position: absolute;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(var(--x-coords), var(--y-coords));
+  }
+
+  50% {
+    transform: translate(var(--x-drift), var(--y-half-drift));
+  }
+
+  100% {
+    transform: translate(var(--x-coords), var(--y-full-drift));
+  }
+}
+
+@keyframes fading {
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes vanish {
+  
+}

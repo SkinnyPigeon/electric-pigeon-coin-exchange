@@ -36,7 +36,7 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:5000/keys')
+        fetch('/keys')
             .then(response => response.json())
             .then(function (data) {
                 this.setState({
@@ -46,7 +46,7 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
-        // this.startQueryingBlockchain()
+        this.startQueryingBlockchain()
     }
 
     // componentDidUpdate() {
@@ -78,7 +78,8 @@ export default class Header extends Component {
     }
 
     getSellerInfo = () => {
-        fetch('http://localhost:5000/wallets')
+        console.log("HELLO")
+        fetch('/wallets')
         .then(response => response.json())
         .then(function (wallets) {
             const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
@@ -93,7 +94,7 @@ export default class Header extends Component {
         const user = {
             public_key: this.state.publicKey
         }
-        fetch('http://localhost:5000/balance', {
+        fetch('balance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -143,7 +144,7 @@ export default class Header extends Component {
             };
             console.log(transaction)
 
-            fetch('http://localhost:5000/buy', {
+            fetch('/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -229,6 +230,7 @@ export default class Header extends Component {
                         <Route path="/presale">
                             <div>
                                 <Presale
+                                    yourWallet={this.state.publicKey}
                                     balance={this.state.balance}
                                     coinsOwned={this.state.coinsOwned}
                                     coinsPending={this.state.coinsPending}

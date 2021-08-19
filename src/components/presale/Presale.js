@@ -20,6 +20,7 @@ export default class Presale extends Component {
                     <div>
                         <h3 className="sellersAndBalanceText">Your Wallet</h3>
                         <Balance 
+                            yourWallet={this.props.yourWallet}
                             balance={this.props.balance} 
                             coinsOwned={this.props.coinsOwned} 
                             coinsPending={this.props.coinsPending} 

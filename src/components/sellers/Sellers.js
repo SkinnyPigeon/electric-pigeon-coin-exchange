@@ -18,6 +18,7 @@ export default class Sellers extends Component {
         let oldSellers = []
         let newSellers = []
         prevProps.sellers.forEach(seller => {
+            console.log(this.sortSellerKeys(seller))
             oldSellers.push(this.sortSellerKeys(seller))
         });
         this.props.sellers.forEach(seller => {
@@ -45,10 +46,10 @@ export default class Sellers extends Component {
     }
 
     sortSellerKeys = (seller) => {
-        Object.keys(seller).sort().reduce(
-            (obj, key) => {
-                obj[key] = seller[key];
-                return obj;
+        return Object.keys(seller).sort().reduce(
+            (sortedSeller, key) => {
+                sortedSeller[key] = seller[key];
+                return sortedSeller;
             },
             {}
         );

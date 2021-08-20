@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-// import title from './title.png';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
-// import Sellers from '../sellers/Sellers';
-
 
 import {
     BrowserRouter as Router,
@@ -50,13 +47,25 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
-        // this.getUserBalance()
         this.startQueryingBlockchain();
     }
 
-    // componentDidUpdate() {
-    //     console.log(this.state)
-    // }
+    componentWillUnmount() {
+        this.state.intervals.forEach(interval => {
+            clearInterval(interval)
+        })
+    }
+
+    startQueryingBlockchain = () => {
+        const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
+        const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
+        const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
+        const valueIntervalID = setInterval(this.getCoinValue, 1000);
+        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID]
+        this.setState({
+            intervals: intervals
+        });
+    }
 
     likeTheCoin = () => {
         fetch('/stats/add_like')
@@ -101,23 +110,6 @@ export default class Header extends Component {
         }.bind(this));
     }
 
-
-    startQueryingBlockchain = () => {
-        const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
-        const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
-        const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
-        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID]
-        this.setState({
-            intervals: intervals
-        });
-    }
-
-    componentWillUnmount() {
-        this.state.intervals.forEach(interval => {
-            clearInterval(interval)
-        })
-    }
-
     getSellerInfo = () => {
         fetch('/wallet_and_keys/wallets')
         .then(response => response.json())
@@ -155,6 +147,19 @@ export default class Header extends Component {
         .catch(error => console.log(error))
     }
 
+    getCoinValue = () => {
+        fetch('/stats/get_value')
+        .then(response => response.json())
+        .then(function(data) {
+            const value = data['message'];
+            if(Number(value) && value !== this.state.exchangeRate) {
+                this.setState({
+                    exchangeRate: value
+                })
+            }
+        }.bind(this))
+    }
+
     selectSeller = (e) => {
         const seller = e.target.parentNode.children;
         const sellerId = seller[0].id;
@@ -176,13 +181,13 @@ export default class Header extends Component {
         if( this.state.selectedSeller !== '' && 
             this.state.purchaseAmount > 0 && 
             this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
-            this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
+            this.state.balance >= this.state.purchaseAmount &&
             this.state.balance > 0) {
             const transaction = { 
                 id: this.state.walletID,
                 seller: this.state.selectedSeller,
                 buyer: this.state.publicKey,
-                amount: this.state.purchaseAmount
+                amount: this.state.purchaseAmount / this.state.exchangeRate
             };
             console.log(transaction)
 
@@ -194,18 +199,18 @@ export default class Header extends Component {
                 body: JSON.stringify(transaction)
             })
             .then(response => response.json())
-            .then(function(data) {
-                const coinsPending = this.state.coinsPending + this.state.purchaseAmount;
+            .then(function() {
+                const coinsPending = this.state.coinsPending + this.state.purchaseAmount / this.state.exchangeRate;
+                const newBalance = this.state.balance - this.state.purchaseAmount;
                 this.setState({
-                    coinsPending: coinsPending
+                    coinsPending: coinsPending,
+                    balance: newBalance
                 })
                 this.cancelPurchase();
             }.bind(this))
             .catch(error => console.log(error))
         }
     }
-
- 
 
     cancelPurchase = () => {
         this.setState({

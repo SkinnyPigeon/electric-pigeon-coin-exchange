@@ -40,7 +40,7 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        fetch('/keys')
+        fetch('/wallet_and_keys/keys')
             .then(response => response.json())
             .then(function (data) {
                 this.setState({
@@ -50,6 +50,7 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
+        // this.getUserBalance()
         this.startQueryingBlockchain();
     }
 
@@ -58,7 +59,7 @@ export default class Header extends Component {
     // }
 
     likeTheCoin = () => {
-        fetch('/add_like')
+        fetch('/stats/add_like')
         .then(response => response.json())
         .then(data => console.log(data))
     }
@@ -67,7 +68,7 @@ export default class Header extends Component {
         const like = {
             'table': 'likes'
         }
-        fetch('/get_counts', {
+        fetch('/stats/get_counts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,24 +101,6 @@ export default class Header extends Component {
         }.bind(this));
     }
 
-    getExchangeRate = () => {
-        setInterval(function () {
-            const exchangeRate = this.state.exchangeRate + this.getRandomInt(3);
-            this.setState({
-                exchangeRate: exchangeRate
-            })
-        }.bind(this), 5000)
-    }
-
-    getRandomGrowth = (max) => {
-        const growthArray = [true, true, true, true, true, true, true, false, false, false]
-        const arrayIndex = Math.floor(Math.random() * 9)
-        console.log("Array Index: ", arrayIndex)
-        const grow = growthArray[arrayIndex]
-        const growthAmount = Math.floor(Math.random() * max) / 10
-        const growth = grow ? growthAmount : -growthAmount
-        return growth
-    }
 
     startQueryingBlockchain = () => {
         const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
@@ -136,7 +119,7 @@ export default class Header extends Component {
     }
 
     getSellerInfo = () => {
-        fetch('/wallets')
+        fetch('/wallet_and_keys/wallets')
         .then(response => response.json())
         .then(function (wallets) {
             const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
@@ -151,7 +134,7 @@ export default class Header extends Component {
         const user = {
             public_key: this.state.publicKey
         }
-        fetch('/balance', {
+        fetch('/wallet_and_keys/balance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -160,6 +143,7 @@ export default class Header extends Component {
         })
         .then(response => response.json())
         .then(function(data) {
+            console.log(data)
             const difference = data.balance - this.state.coinsOwned;
             let coinsPending = this.state.coinsPending - difference;
             coinsPending = coinsPending < 0 ? 0 : coinsPending;
@@ -202,7 +186,7 @@ export default class Header extends Component {
             };
             console.log(transaction)
 
-            fetch('/buy', {
+            fetch('/transactions/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

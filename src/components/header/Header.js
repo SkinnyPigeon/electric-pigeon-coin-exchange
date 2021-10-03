@@ -34,6 +34,7 @@ export default class Header extends Component {
         likeCount: 0,
         likeTheCoinDifference: 0,
         intervals: [],
+        tutorial: true,
     }
 
     componentDidMount() {
@@ -229,6 +230,12 @@ export default class Header extends Component {
         const menu = document.getElementById('burgerLinks');
         menu.style.width = '0';
     }
+
+    closeTutorial = () => {
+        this.setState({
+            tutorial: false
+        })
+    }
    
 
     render() {
@@ -301,6 +308,8 @@ export default class Header extends Component {
                                     likeTheCoin={this.likeTheCoin}
                                     likeTheCoinDifference={this.state.likeTheCoinDifference}
 
+                                    tutorial={this.state.tutorial}
+                                    closeTutorial={this.closeTutorial}
                                 />
                             </div>
                         </Route>

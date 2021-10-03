@@ -5,51 +5,97 @@ import Buy from '../buy/Buy';
 // import Button from '../button/Button';
 
 export default class Presale extends Component {
-    
+
     render() {
-        return (
-            <div className="presaleDiv">
-                <div className="sellersAndBalance">
-                    <div>
-                        <h3 className="sellersAndBalanceText">Top Sellers</h3>
-                        <Sellers
-                            sellers={this.props.sellers}
-                            selectSeller={this.props.selectSeller}
-                        />
-                    </div>
-                    <div>
-                        <h3 className="sellersAndBalanceText">Your Wallet</h3>
-                        <Balance 
-                            yourWallet={this.props.yourWallet}
-                            balance={this.props.balance} 
-                            coinsOwned={this.props.coinsOwned} 
-                            coinsPending={this.props.coinsPending} 
-                            chainStatus={this.props.chainStatus}
-                            exchangeRate={this.props.exchangeRate}
-                        />
-                    </div>
-                    
+        const mainDisplay = <div className="presaleDiv">
+            <div className="sellersAndBalance">
+                <div>
+                    <h3 className="sellersAndBalanceText">Top Sellers</h3>
+                    <Sellers
+                        sellers={this.props.sellers}
+                        selectSeller={this.props.selectSeller}
+                    />
                 </div>
-                
-                
-                <Buy 
-                    selectedSeller={this.props.selectedSeller}
+                <div>
+                    <h3 className="sellersAndBalanceText">Your Wallet</h3>
+                    <Balance
+                        yourWallet={this.props.yourWallet}
+                        balance={this.props.balance}
+                        coinsOwned={this.props.coinsOwned}
+                        coinsPending={this.props.coinsPending}
+                        chainStatus={this.props.chainStatus}
+                        exchangeRate={this.props.exchangeRate}
+                    />
+                </div>
 
-                    purchaseAmount={this.props.purchaseAmount}
-                    selectPurchaseAmount={this.props.selectPurchaseAmount}
-
-                    buyButtonClass={this.props.buyButtonClass}
-                    makePurchase={this.props.makePurchase}
-                    
-                    cancelButtonClass={this.props.cancelButtonClass}
-                    cancelPurchase={this.props.cancelPurchase}
-
-                    likeTheCoinClass={this.props.likeTheCoinClass}
-                    likeTheCoin={this.props.likeTheCoin}
-                    likeTheCoinDifference={this.props.likeTheCoinDifference}
-
-                />
             </div>
+
+
+            <Buy
+                selectedSeller={this.props.selectedSeller}
+
+                purchaseAmount={this.props.purchaseAmount}
+                selectPurchaseAmount={this.props.selectPurchaseAmount}
+
+                buyButtonClass={this.props.buyButtonClass}
+                makePurchase={this.props.makePurchase}
+
+                cancelButtonClass={this.props.cancelButtonClass}
+                cancelPurchase={this.props.cancelPurchase}
+
+                likeTheCoinClass={this.props.likeTheCoinClass}
+                likeTheCoin={this.props.likeTheCoin}
+                likeTheCoinDifference={this.props.likeTheCoinDifference}
+
+            />
+        </div>
+        // let display = this.props.tutorial ? tutorialDisplay : mainDisplay;
+        return (
+            <div>
+                {mainDisplay}
+            </div>
+            // <div className="presaleDiv">
+            //     <div className="sellersAndBalance">
+            //         <div>
+            //             <h3 className="sellersAndBalanceText">Top Sellers</h3>
+            //             <Sellers
+            //                 sellers={this.props.sellers}
+            //                 selectSeller={this.props.selectSeller}
+            //             />
+            //         </div>
+            //         <div>
+            //             <h3 className="sellersAndBalanceText">Your Wallet</h3>
+            //             <Balance
+            //                 yourWallet={this.props.yourWallet}
+            //                 balance={this.props.balance}
+            //                 coinsOwned={this.props.coinsOwned}
+            //                 coinsPending={this.props.coinsPending}
+            //                 chainStatus={this.props.chainStatus}
+            //                 exchangeRate={this.props.exchangeRate}
+            //             />
+            //         </div>
+
+            //     </div>
+
+
+            //     <Buy
+            //         selectedSeller={this.props.selectedSeller}
+
+            //         purchaseAmount={this.props.purchaseAmount}
+            //         selectPurchaseAmount={this.props.selectPurchaseAmount}
+
+            //         buyButtonClass={this.props.buyButtonClass}
+            //         makePurchase={this.props.makePurchase}
+
+            //         cancelButtonClass={this.props.cancelButtonClass}
+            //         cancelPurchase={this.props.cancelPurchase}
+
+            //         likeTheCoinClass={this.props.likeTheCoinClass}
+            //         likeTheCoin={this.props.likeTheCoin}
+            //         likeTheCoinDifference={this.props.likeTheCoinDifference}
+
+            //     />
+            // </div>
         )
     }
 }

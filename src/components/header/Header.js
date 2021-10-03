@@ -34,11 +34,11 @@ export default class Header extends Component {
         likeCount: 0,
         likeTheCoinDifference: 0,
         intervals: [],
-        tutorial: true,
         elonUpCount: 0,
         elonUpCountDifference: 0,
         elonDownCount: 0,
         elonDownCountDifference: 0,
+        elonActionClass: 'elon',
         highjacked: false,
 
     }
@@ -122,6 +122,7 @@ export default class Header extends Component {
         fetch('/elon/get_elon_counts')
         .then(response => response.json())
         .then(function(data) {
+            console.log(data)
             const elonUpCount = this.state.elonUpCount;
             if(elonUpCount > 0) {
                 const newElonUpCount = data['elon_up']
@@ -137,7 +138,7 @@ export default class Header extends Component {
                 }
             } else {
                 if(Number.isInteger(data['elon_up'])) {
-                    console.log('SETTING ELON UP COUNT FOR THE FIRST TIME')
+                    // console.log('SETTING ELON UP COUNT FOR THE FIRST TIME')
                     this.setState({
                         likeCount: data['elon_up']
                     });
@@ -158,7 +159,7 @@ export default class Header extends Component {
                 }
             } else {
                 if(Number.isInteger(data['elon_down'])) {
-                    console.log('SETTING ELON DOWN COUNT FOR THE FIRST TIME')
+                    // console.log('SETTING ELON DOWN COUNT FOR THE FIRST TIME')
                     this.setState({
                         likeCount: data['elon_down']
                     });
@@ -287,13 +288,6 @@ export default class Header extends Component {
         menu.style.width = '0';
     }
 
-    closeTutorial = () => {
-        this.setState({
-            tutorial: false
-        })
-    }
-   
-
     render() {
         return <div className="headerDiv">
             <Router>
@@ -364,8 +358,9 @@ export default class Header extends Component {
                                     likeTheCoin={this.likeTheCoin}
                                     likeTheCoinDifference={this.state.likeTheCoinDifference}
 
-                                    tutorial={this.state.tutorial}
-                                    closeTutorial={this.closeTutorial}
+                                    elonActionClass={this.state.elonActionClass}
+                                    elonUpCountDifference={this.state.elonUpCountDifference}
+                                    elonDownCountDifference={this.state.elonDownCountDifference}                            
                                 />
                             </div>
                         </Route>

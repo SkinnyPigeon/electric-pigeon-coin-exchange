@@ -30,6 +30,31 @@ export default class Buy extends Component {
                 }, 200 * id)
             })
         }
+        if(prevProps.elonUpCountDifference !== this.props.elonUpCountDifference) {
+            console.log('New Elon Up Difference: ', this.props.elonUpCountDifference);
+            const likeDiv = document.getElementById('likeDiv');
+            const likeButton = document.getElementById('likeTheCoinDiv');
+            const likeXL = likeButton.getBoundingClientRect().left;
+            const likeXR = likeButton.getBoundingClientRect().right;
+            const likeX = likeXL + (likeXR - likeXL) / 2;
+            likeDiv.style.left = likeX + 'px';
+            const likeYT = likeButton.getBoundingClientRect().top;
+            const likeYB = likeButton.getBoundingClientRect().bottom;
+            const likeY = likeYT + (likeYT - likeYB) / 2;
+            likeDiv.style.top = likeY + 'px';
+            [...Array(this.props.elonUpCountDifference).keys()].forEach(id => {
+                setTimeout(function() {
+                    const elonUp = document.createElement('img');
+                    elonUp.className = 'floatingLikes';
+                    elonUp.src = "../elon/elon_up.png"
+                    const xRand = Math.floor(Math.random() * 50 + 1);
+                    const xPositivity = Math.round(Math.random()) ? 1 : -1;
+                    elonUp.style.setProperty('--x-drift', (xRand * xPositivity) + 'px');
+                    likeDiv.appendChild(elonUp);
+                }, 200 * id)
+            })
+        }
+        
     }
 
     clearOldLikes = () => {

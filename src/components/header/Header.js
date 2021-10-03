@@ -35,6 +35,12 @@ export default class Header extends Component {
         likeTheCoinDifference: 0,
         intervals: [],
         tutorial: true,
+        elonUpCount: 0,
+        elonUpCountDifference: 0,
+        elonDownCount: 0,
+        elonDownCountDifference: 0,
+        highjacked: false,
+
     }
 
     componentDidMount() {
@@ -61,8 +67,9 @@ export default class Header extends Component {
         const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
         const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
         const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
+        const elonReactionCountIntervalID = setInterval(this.getElonCounts, 5000)
         const valueIntervalID = setInterval(this.getCoinValue, 1000);
-        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID]
+        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID, elonReactionCountIntervalID]
         this.setState({
             intervals: intervals
         });
@@ -105,6 +112,55 @@ export default class Header extends Component {
                     console.log('SETTING LIKE COUNT FOR THE FIRST TIME')
                     this.setState({
                         likeCount: data['message']
+                    });
+                }
+            }
+        }.bind(this));
+    }
+
+    getElonCounts = () => {
+        fetch('/elon/get_elon_counts')
+        .then(response => response.json())
+        .then(function(data) {
+            const elonUpCount = this.state.elonUpCount;
+            if(elonUpCount > 0) {
+                const newElonUpCount = data['elon_up']
+                if(Number.isInteger(newElonUpCount)) {
+                    if(newElonUpCount > elonUpCount) {
+                        console.log('UPDATING THE ELON UP COUNT')
+                        const difference = newElonUpCount - elonUpCount;
+                        this.setState({
+                            elonUpCount: newElonUpCount,
+                            elonDownCountDifference: difference
+                        })
+                    }
+                }
+            } else {
+                if(Number.isInteger(data['elon_up'])) {
+                    console.log('SETTING ELON UP COUNT FOR THE FIRST TIME')
+                    this.setState({
+                        likeCount: data['elon_up']
+                    });
+                }
+            }
+            const elonDownCount = this.state.elonDownCount;
+            if(elonDownCount > 0) {
+                const newElonDownCount = data['elon_down']
+                if(Number.isInteger(newElonDownCount)) {
+                    if(newElonDownCount > elonDownCount) {
+                        console.log('UPDATING THE ELON DOWN COUNT')
+                        const difference = newElonDownCount - elonDownCount;
+                        this.setState({
+                            likeCount: newElonDownCount,
+                            likeTheCoinDifference: difference
+                        })
+                    }
+                }
+            } else {
+                if(Number.isInteger(data['elon_down'])) {
+                    console.log('SETTING ELON DOWN COUNT FOR THE FIRST TIME')
+                    this.setState({
+                        likeCount: data['elon_down']
                     });
                 }
             }

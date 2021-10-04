@@ -383,3 +383,24 @@ button.like {
 @keyframes vanish {
   
 }
+
+
+/*********Stolen**********/
+
+.stolen { 
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  min-height: 100%;
+  min-width: 100%;
+  text-align: center;
+  color: #b884e0;
+  font-size: 1.5em;
+}
+
+@media (max-width: 800px) {
+  .stolen h1, .stolen h3, .stolen h5, .stolen p {
+    padding: 5px;
+  }
+}

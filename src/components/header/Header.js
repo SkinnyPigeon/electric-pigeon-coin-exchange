@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
+import Stolen from '../stolen/Stolen';
 
 import {
     BrowserRouter as Router,
@@ -42,8 +43,7 @@ export default class Header extends Component {
         elonDownCount: 0,
         elonDownCountDifference: 0,
         elonActionClass: 'elon',
-        highjacked: false,
-
+        stolen: false,
     }
 
     componentDidMount() {
@@ -57,6 +57,7 @@ export default class Header extends Component {
                 })
             }.bind(this));
         this.getSellerInfo();
+        this.checkStolen();
         this.startQueryingBlockchain();
     }
 
@@ -72,7 +73,8 @@ export default class Header extends Component {
         const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
         const elonReactionCountIntervalID = setInterval(this.getElonCounts, 5000)
         const valueIntervalID = setInterval(this.getCoinValue, 1000);
-        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID, elonReactionCountIntervalID]
+        const stolenIntervalID = setInterval(this.checkStolen, 5000);
+        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID, elonReactionCountIntervalID, stolenIntervalID]
         this.setState({
             intervals: intervals
         });
@@ -119,6 +121,18 @@ export default class Header extends Component {
                 }
             }
         }.bind(this));
+    }
+
+    checkStolen = () => {
+        fetch(urlPrefix + '/steal/check_status')
+        .then(response => response.json())
+        .then(function(data) {
+            if(data['message'] !== this.state.stolen) {
+                this.setState({
+                    stolen: data['message']
+                })
+            }
+        }.bind(this))
     }
 
     getElonCounts = () => {
@@ -291,36 +305,18 @@ export default class Header extends Component {
     }
 
     render() {
-        return <div className="headerDiv">
-            <Router>
-                <div className="routerDiv">
-                    <div className="navHeader">
-                        <div className="titleDiv"></div>
-                        <div className="burgerMenu" onClick={() => this.showBurgerMenu()}>
-                            <div className="burger"></div>
-                            <div className="burger"></div>
-                            <div className="burger"></div>
-                        </div>
-                        <nav className="navLinks">
-                            <ul className='links'>
-                                <li>
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/presale">Presale</Link>
-                                </li>
-                                <li>
-                                    <Link to="/blockchain">Blockchain</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        
+        const mainDisplay = <div className="headerDiv">
+        <Router>
+            <div className="routerDiv">
+                <div className="navHeader">
+                    <div className="titleDiv"></div>
+                    <div className="burgerMenu" onClick={() => this.showBurgerMenu()}>
+                        <div className="burger"></div>
+                        <div className="burger"></div>
+                        <div className="burger"></div>
                     </div>
-
-                    <div className="borderDiv"></div>
-                    <nav id="burgerLinks" className="burgerLinks">
-                        <div className="closeBurgerMenu" onClick={() => this.hideBurgerMenu()}>&times;</div>
-                        <ul className='burgerLinksList'>
+                    <nav className="navLinks">
+                        <ul className='links'>
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
@@ -332,49 +328,154 @@ export default class Header extends Component {
                             </li>
                         </ul>
                     </nav>
-                    <Switch>
-                        <Route path="/presale">
-                            <div>
-                                <Presale
-                                    yourWallet={this.state.publicKey}
-                                    balance={this.state.balance}
-                                    coinsOwned={this.state.coinsOwned}
-                                    coinsPending={this.state.coinsPending}
-                                    chainStatus={this.state.chainStatus}
-                                    exchangeRate={this.state.exchangeRate}
-
-                                    sellers={this.state.sellers}
-                                    selectSeller={this.selectSeller}
-                                    selectedSeller={this.state.selectedSeller}
-
-                                    purchaseAmount={this.state.purchaseAmount}
-                                    selectPurchaseAmount={this.selectPurchaseAmount}
-
-                                    buyButtonClass={this.state.buyButtonClass}
-                                    makePurchase={this.makePurchase}
-
-                                    cancelButtonClass={this.state.cancelButtonClass}
-                                    cancelPurchase={this.cancelPurchase}
-
-                                    likeTheCoinClass={this.state.likeTheCoinClass}
-                                    likeTheCoin={this.likeTheCoin}
-                                    likeTheCoinDifference={this.state.likeTheCoinDifference}
-
-                                    elonActionClass={this.state.elonActionClass}
-                                    elonUpCountDifference={this.state.elonUpCountDifference}
-                                    elonDownCountDifference={this.state.elonDownCountDifference}                            
-                                />
-                            </div>
-                        </Route>
-                        <Route path="/blockchain">
-                            <Blockchain />
-                        </Route>
-                        <Route path="/">
-                            <Home />
-                        </Route>
-                    </Switch>
+                    
                 </div>
-            </Router>
-        </div>
+
+                <div className="borderDiv"></div>
+                <nav id="burgerLinks" className="burgerLinks">
+                    <div className="closeBurgerMenu" onClick={() => this.hideBurgerMenu()}>&times;</div>
+                    <ul className='burgerLinksList'>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="/presale">Presale</Link>
+                        </li>
+                        <li>
+                            <Link to="/blockchain">Blockchain</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <Switch>
+                    <Route path="/presale">
+                        <div>
+                            <Presale
+                                yourWallet={this.state.publicKey}
+                                balance={this.state.balance}
+                                coinsOwned={this.state.coinsOwned}
+                                coinsPending={this.state.coinsPending}
+                                chainStatus={this.state.chainStatus}
+                                exchangeRate={this.state.exchangeRate}
+
+                                sellers={this.state.sellers}
+                                selectSeller={this.selectSeller}
+                                selectedSeller={this.state.selectedSeller}
+
+                                purchaseAmount={this.state.purchaseAmount}
+                                selectPurchaseAmount={this.selectPurchaseAmount}
+
+                                buyButtonClass={this.state.buyButtonClass}
+                                makePurchase={this.makePurchase}
+
+                                cancelButtonClass={this.state.cancelButtonClass}
+                                cancelPurchase={this.cancelPurchase}
+
+                                likeTheCoinClass={this.state.likeTheCoinClass}
+                                likeTheCoin={this.likeTheCoin}
+                                likeTheCoinDifference={this.state.likeTheCoinDifference}
+
+                                elonActionClass={this.state.elonActionClass}
+                                elonUpCountDifference={this.state.elonUpCountDifference}
+                                elonDownCountDifference={this.state.elonDownCountDifference}                            
+                            />
+                        </div>
+                    </Route>
+                    <Route path="/blockchain">
+                        <Blockchain />
+                    </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+    </div>
+    let toDisplay = this.state.stolen ? <Stolen /> : mainDisplay
+    return <div>{toDisplay}</div>
+        // return <div className="headerDiv">
+        //     <Router>
+        //         <div className="routerDiv">
+        //             <div className="navHeader">
+        //                 <div className="titleDiv"></div>
+        //                 <div className="burgerMenu" onClick={() => this.showBurgerMenu()}>
+        //                     <div className="burger"></div>
+        //                     <div className="burger"></div>
+        //                     <div className="burger"></div>
+        //                 </div>
+        //                 <nav className="navLinks">
+        //                     <ul className='links'>
+        //                         <li>
+        //                             <Link to="/">Home</Link>
+        //                         </li>
+        //                         <li>
+        //                             <Link to="/presale">Presale</Link>
+        //                         </li>
+        //                         <li>
+        //                             <Link to="/blockchain">Blockchain</Link>
+        //                         </li>
+        //                     </ul>
+        //                 </nav>
+                        
+        //             </div>
+
+        //             <div className="borderDiv"></div>
+        //             <nav id="burgerLinks" className="burgerLinks">
+        //                 <div className="closeBurgerMenu" onClick={() => this.hideBurgerMenu()}>&times;</div>
+        //                 <ul className='burgerLinksList'>
+        //                     <li>
+        //                         <Link to="/">Home</Link>
+        //                     </li>
+        //                     <li>
+        //                         <Link to="/presale">Presale</Link>
+        //                     </li>
+        //                     <li>
+        //                         <Link to="/blockchain">Blockchain</Link>
+        //                     </li>
+        //                 </ul>
+        //             </nav>
+        //             <Switch>
+        //                 <Route path="/presale">
+        //                     <div>
+        //                         <Presale
+        //                             yourWallet={this.state.publicKey}
+        //                             balance={this.state.balance}
+        //                             coinsOwned={this.state.coinsOwned}
+        //                             coinsPending={this.state.coinsPending}
+        //                             chainStatus={this.state.chainStatus}
+        //                             exchangeRate={this.state.exchangeRate}
+
+        //                             sellers={this.state.sellers}
+        //                             selectSeller={this.selectSeller}
+        //                             selectedSeller={this.state.selectedSeller}
+
+        //                             purchaseAmount={this.state.purchaseAmount}
+        //                             selectPurchaseAmount={this.selectPurchaseAmount}
+
+        //                             buyButtonClass={this.state.buyButtonClass}
+        //                             makePurchase={this.makePurchase}
+
+        //                             cancelButtonClass={this.state.cancelButtonClass}
+        //                             cancelPurchase={this.cancelPurchase}
+
+        //                             likeTheCoinClass={this.state.likeTheCoinClass}
+        //                             likeTheCoin={this.likeTheCoin}
+        //                             likeTheCoinDifference={this.state.likeTheCoinDifference}
+
+        //                             elonActionClass={this.state.elonActionClass}
+        //                             elonUpCountDifference={this.state.elonUpCountDifference}
+        //                             elonDownCountDifference={this.state.elonDownCountDifference}                            
+        //                         />
+        //                     </div>
+        //                 </Route>
+        //                 <Route path="/blockchain">
+        //                     <Blockchain />
+        //                 </Route>
+        //                 <Route path="/">
+        //                     <Home />
+        //                 </Route>
+        //             </Switch>
+        //         </div>
+        //     </Router>
+        // </div>
     }
 }

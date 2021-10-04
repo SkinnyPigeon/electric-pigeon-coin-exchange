@@ -49,6 +49,7 @@ export default class Presale extends Component {
 
                 elonActionClass={this.props.elonActionClass}
                 elonUpCount={this.props.elonUpCount}
+                elonDownCount={this.props.elonDownCount}
             />
         </div>
         // let display = this.props.tutorial ? tutorialDisplay : mainDisplay;

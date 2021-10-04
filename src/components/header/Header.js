@@ -11,7 +11,7 @@ import {
     Link
 } from "react-router-dom";
 
-const urlPrefix = ""
+const urlPrefix = "http://localhost:5000"
 // const urlPrefix = "https://13.80.254.215"
 
 export default class Header extends Component {
@@ -58,7 +58,7 @@ export default class Header extends Component {
             }.bind(this));
         this.getSellerInfo();
         this.checkStolen();
-        // this.startQueryingBlockchain();
+        this.startQueryingBlockchain();
         this.getElonCounts();
     }
 
@@ -69,13 +69,20 @@ export default class Header extends Component {
     }
 
     startQueryingBlockchain = () => {
-        const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
-        const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
-        const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
-        const elonReactionCountIntervalID = setInterval(this.getElonCounts, 5000)
-        const valueIntervalID = setInterval(this.getCoinValue, 1000);
-        const stolenIntervalID = setInterval(this.checkStolen, 5000);
-        const intervals = [sellerInfoIntervalID, userBalanceIntervalID, likeCountIntervalID, valueIntervalID, elonReactionCountIntervalID, stolenIntervalID]
+        // const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
+        // const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
+        // const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
+        const elonReactionCountIntervalID = setInterval(this.getElonCounts, 5000);
+        // const valueIntervalID = setInterval(this.getCoinValue, 1000);
+        // const stolenIntervalID = setInterval(this.checkStolen, 5000);
+        const intervals = [
+            // sellerInfoIntervalID, 
+            // userBalanceIntervalID, 
+            // likeCountIntervalID, 
+            // valueIntervalID, 
+            elonReactionCountIntervalID, 
+            // stolenIntervalID
+        ]
         this.setState({
             intervals: intervals
         });
@@ -137,28 +144,30 @@ export default class Header extends Component {
     }
 
     getElonCounts = () => {
+        console.log("FETHCHING")
         fetch(urlPrefix + '/elon/get_elon_counts')
         .then(response => response.json())
-        .then(function(data) {
-            console.log(data)
-            const elonUpCount = this.state.elonUpCount;
-            const elonDownCount = this.state.elonDownCount;
-            if(Number.isInteger(data['elon_up'])) {
-                if(data['elon_up'] > elonUpCount) {
-                    this.setState({
-                        elonUpCount: data['elon_up']
-                    })
-                }
-            }
-            if(Number.isInteger(data['elon_up'])) {
-                if(data['elon_down'] > elonDownCount) {
-                    this.setState({
-                        elonDownCount: data['elon_down']
-                    })
-                }
-            }
-            console.log(this.state)
-        }.bind(this));
+        .then(data => console.log(data))
+        // .then(function(data) {
+        //     console.log(data)
+        //     const elonUpCount = this.state.elonUpCount;
+        //     const elonDownCount = this.state.elonDownCount;
+        //     if(Number.isInteger(data['elon_up'])) {
+        //         if(data['elon_up'] > elonUpCount) {
+        //             this.setState({
+        //                 elonUpCount: data['elon_up']
+        //             })
+        //         }
+        //     }
+        //     if(Number.isInteger(data['elon_up'])) {
+        //         if(data['elon_down'] > elonDownCount) {
+        //             this.setState({
+        //                 elonDownCount: data['elon_down']
+        //             })
+        //         }
+        //     }
+        //     console.log(this.state)
+        // }.bind(this));
     }
 
     getSellerInfo = () => {
@@ -352,6 +361,7 @@ export default class Header extends Component {
 
                                 elonActionClass={this.state.elonActionClass}
                                 elonUpCount={this.state.elonUpCount}
+                                elonDownCount={this.state.elonDownCount}
                             />
                         </div>
                     </Route>

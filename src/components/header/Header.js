@@ -10,6 +10,9 @@ import {
     Link
 } from "react-router-dom";
 
+const urlPrefix = ""
+// const urlPrefix = "https://13.80.254.215"
+
 export default class Header extends Component {
 
     state = {
@@ -44,7 +47,7 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        fetch('/wallet_and_keys/keys')
+        fetch(urlPrefix + '/wallet_and_keys/keys')
             .then(response => response.json())
             .then(function (data) {
                 this.setState({
@@ -76,7 +79,7 @@ export default class Header extends Component {
     }
 
     likeTheCoin = () => {
-        fetch('/stats/add_like')
+        fetch(urlPrefix + '/stats/add_like')
         .then(response => response.json())
         .then(data => console.log(data))
     }
@@ -85,7 +88,7 @@ export default class Header extends Component {
         const like = {
             'table': 'likes'
         }
-        fetch('/stats/get_counts', {
+        fetch(urlPrefix + '/stats/get_counts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -119,7 +122,7 @@ export default class Header extends Component {
     }
 
     getElonCounts = () => {
-        fetch('/elon/get_elon_counts')
+        fetch(urlPrefix + '/elon/get_elon_counts')
         .then(response => response.json())
         .then(function(data) {
             console.log(data)
@@ -169,7 +172,7 @@ export default class Header extends Component {
     }
 
     getSellerInfo = () => {
-        fetch('/wallet_and_keys/wallets')
+        fetch(urlPrefix + '/wallet_and_keys/wallets')
         .then(response => response.json())
         .then(function (wallets) {
             const sortedWallets = wallets.sort((a, b) => parseFloat(b.balance) - parseFloat(a.balance));
@@ -184,7 +187,7 @@ export default class Header extends Component {
         const user = {
             public_key: this.state.publicKey
         }
-        fetch('/wallet_and_keys/balance', {
+        fetch(urlPrefix + '/wallet_and_keys/balance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,7 +209,7 @@ export default class Header extends Component {
     }
 
     getCoinValue = () => {
-        fetch('/stats/get_value')
+        fetch(urlPrefix + '/stats/get_value')
         .then(response => response.json())
         .then(function(data) {
             const value = data['message'];
@@ -248,8 +251,7 @@ export default class Header extends Component {
                 amount: this.state.purchaseAmount / this.state.exchangeRate
             };
             console.log(transaction)
-
-            fetch('/transactions/buy', {
+            fetch(urlPrefix + '/transactions/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

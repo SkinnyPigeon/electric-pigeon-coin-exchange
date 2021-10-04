@@ -58,7 +58,8 @@ export default class Header extends Component {
             }.bind(this));
         this.getSellerInfo();
         this.checkStolen();
-        this.startQueryingBlockchain();
+        // this.startQueryingBlockchain();
+        this.getElonCounts();
     }
 
     componentWillUnmount() {
@@ -141,47 +142,22 @@ export default class Header extends Component {
         .then(function(data) {
             console.log(data)
             const elonUpCount = this.state.elonUpCount;
-            if(elonUpCount > 0) {
-                const newElonUpCount = data['elon_up']
-                if(Number.isInteger(newElonUpCount)) {
-                    if(newElonUpCount > elonUpCount) {
-                        console.log('UPDATING THE ELON UP COUNT')
-                        const difference = newElonUpCount - elonUpCount;
-                        this.setState({
-                            elonUpCount: newElonUpCount,
-                            elonDownCountDifference: difference
-                        })
-                    }
-                }
-            } else {
-                if(Number.isInteger(data['elon_up'])) {
-                    // console.log('SETTING ELON UP COUNT FOR THE FIRST TIME')
-                    this.setState({
-                        likeCount: data['elon_up']
-                    });
-                }
-            }
             const elonDownCount = this.state.elonDownCount;
-            if(elonDownCount > 0) {
-                const newElonDownCount = data['elon_down']
-                if(Number.isInteger(newElonDownCount)) {
-                    if(newElonDownCount > elonDownCount) {
-                        console.log('UPDATING THE ELON DOWN COUNT')
-                        const difference = newElonDownCount - elonDownCount;
-                        this.setState({
-                            likeCount: newElonDownCount,
-                            likeTheCoinDifference: difference
-                        })
-                    }
-                }
-            } else {
-                if(Number.isInteger(data['elon_down'])) {
-                    // console.log('SETTING ELON DOWN COUNT FOR THE FIRST TIME')
+            if(Number.isInteger(data['elon_up'])) {
+                if(data['elon_up'] > elonUpCount) {
                     this.setState({
-                        likeCount: data['elon_down']
-                    });
+                        elonUpCount: data['elon_up']
+                    })
                 }
             }
+            if(Number.isInteger(data['elon_up'])) {
+                if(data['elon_down'] > elonDownCount) {
+                    this.setState({
+                        elonDownCount: data['elon_down']
+                    })
+                }
+            }
+            console.log(this.state)
         }.bind(this));
     }
 
@@ -375,8 +351,7 @@ export default class Header extends Component {
                                 likeTheCoinDifference={this.state.likeTheCoinDifference}
 
                                 elonActionClass={this.state.elonActionClass}
-                                elonUpCountDifference={this.state.elonUpCountDifference}
-                                elonDownCountDifference={this.state.elonDownCountDifference}                            
+                                elonUpCount={this.state.elonUpCount}
                             />
                         </div>
                     </Route>

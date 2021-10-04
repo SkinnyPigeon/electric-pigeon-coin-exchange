@@ -48,8 +48,7 @@ export default class Presale extends Component {
                 likeTheCoinDifference={this.props.likeTheCoinDifference}
 
                 elonActionClass={this.props.elonActionClass}
-                elonUpCountDifference={this.props.elonUpCountDifference}
-                elonDownCountDifference={this.props.elonDownCountDifference}   
+                elonUpCount={this.props.elonUpCount}
             />
         </div>
         // let display = this.props.tutorial ? tutorialDisplay : mainDisplay;

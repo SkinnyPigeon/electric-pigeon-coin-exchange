@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BasicDisplay from './BasicDisplay';
-// import elonDownImg from '../elon/elon_down.png';
-// import elonUpImg from '../elon/elon_up.png';
+import elonDownImg from '../elon/elon_down.png';
+import elonUpImg from '../elon/elon_up.png';
 
 
 export default class Buy extends Component {
@@ -33,17 +33,31 @@ export default class Buy extends Component {
         }
         if(prevProps.elonUpCount !== this.props.elonUpCount && !prevProps.elonUpFirst) {
             console.log("ELON'S UP TO SOMETHING");
-            this.displayElonUp();
+            this.displayElon(elonUpImg);
         } 
         if(prevProps.elonDownCount !== this.props.elonDownCount && !prevProps.elonDownFirst) {
             console.log("HE'S GOING TO RUIN US ALL")
+            this.displayElon(elonDownImg)
         }
     }
 
-    displayElonUp = () => {
-        const elonUpFace = <h1>Test</h1>
+    displayElon = (image) => {
+        const elonFace = <div>
+        <img src={image} alt="Elon" style={{width:"50px", position: "absolute"}}/>
+        <BasicDisplay 
+                selectPurchaseAmount={this.props.selectPurchaseAmount}
+                purchaseAmount={this.props.purchaseAmount}
+                selectedSeller={this.props.selectedSeller}
+                buyButtonClass={this.props.buyButtonClass}
+                makePurchase={this.props.makePurchase}
+                cancelButtonClass={this.props.cancelButtonClass}
+                cancelPurchase={this.props.cancelPurchase}
+                likeTheCoinClass={this.props.likeTheCoinClass}
+                likeTheCoin={this.props.likeTheCoin}
+            />
+        </div>
         this.setState({
-            toDisplay: elonUpFace
+            toDisplay: elonFace
         })
         setTimeout(() => {
             this.setState({
@@ -60,10 +74,6 @@ export default class Buy extends Component {
                 />
             })
         }, 5000);
-    }
-
-    displayElonDown = () => {
-        console.log("COULD BOTH THESE FUNCTIONS BE A SINGLE ONE?")
     }
 
     displayLikes = () => {

@@ -404,3 +404,99 @@ button.like {
     padding: 5px;
   }
 }
+
+
+/*********Blockchain table**************/
+
+.blockchainDiv {
+  display: flex;
+  /* height: fit-content; */
+  justify-content: space-between;
+  flex-flow: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.blockTable {
+  border-collapse: collapse;
+  margin: 25px 20px;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 800px) {
+  .blockTable {
+    margin: 25px 0;
+  }
+}
+
+.blockTable thead tr {
+  background-color: #b884e0;
+  color: #ffffff;
+  text-align: left;
+}
+
+.blockTable th,
+.blockTable td {
+    padding: 12px 15px;
+}
+
+.blockTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.blockTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.blockTable tbody tr:last-of-type {
+  border-bottom: 2px solid #b884e0;
+}
+
+.tableRow:hover {
+  font-weight: bold;
+  color: #994fd3;
+  cursor: pointer;
+}
+
+
+.transactionTable {
+  border-collapse: collapse;
+  margin: 25px 20px;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  flex-grow: 3;
+}
+
+@media (max-width: 800px) {
+  .transactionTable {
+    margin: 25px 0;
+  }
+}
+
+.transactionTable thead tr {
+  background-color: #b884e0;
+  color: #ffffff;
+  text-align: left;
+}
+
+.transactionTable th,
+.transactionTable td {
+    padding: 12px 15px;
+}
+
+.transactionTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.transactionTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.transactionTable tbody tr:last-of-type {
+  border-bottom: 2px solid #b884e0;
+}

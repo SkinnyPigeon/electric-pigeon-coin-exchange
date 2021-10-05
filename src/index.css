@@ -410,7 +410,6 @@ button.like {
 
 .blockchainDiv {
   display: flex;
-  /* height: fit-content; */
   justify-content: space-between;
   flex-flow: row;
   flex-wrap: wrap;
@@ -424,6 +423,8 @@ button.like {
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  overflow: auto;
+  height: 50px;
 }
 
 @media (max-width: 800px) {
@@ -440,6 +441,11 @@ button.like {
   background-color: #b884e0;
   color: #ffffff;
   text-align: left;
+}
+
+.blockTable thead, .blockTable th {
+  position: sticky;
+  top: 0;
 }
 
 .blockTable th,
@@ -470,6 +476,8 @@ button.like {
   display: flex;
   flex-grow: 3;
   flex-flow: column;
+  position: sticky;
+  top: 0;
 }
 
 
@@ -480,7 +488,6 @@ button.like {
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  /* flex-grow: 3; */
 }
 
 @media (max-width: 800px) {
@@ -523,10 +530,7 @@ button.like {
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
-  /* max-width: 600px; */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  /* flex-grow: 3; */
-  /* display: flex; */
 }
 
 @media (max-width: 800px) {
@@ -539,6 +543,11 @@ button.like {
   background-color: #b884e0;
   color: #ffffff;
   text-align: left;
+}
+
+.transactionsTable thead, .transactionsTable th {
+  position: sticky;
+  top: 0;
 }
 
 .transactionsTable th,

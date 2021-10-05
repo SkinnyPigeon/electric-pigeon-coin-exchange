@@ -55,7 +55,7 @@ export default class Blockchain extends Component {
                         <tbody>
                             <tr>
                                 <td>{this.state.row.proof}</td>
-                                <td>{this.state.row.previous_hash}</td>
+                                <td>{this.state.row.previous_hash.substring(0, 20)}</td>
                             </tr>
                         </tbody>
                         

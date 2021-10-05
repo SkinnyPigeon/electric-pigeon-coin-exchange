@@ -7,7 +7,7 @@ export default class Transaction extends Component {
         const signature = isMining ? 'None': this.props.transaction.signature.substring(0, 15);
         return (
             <>
-                <td>{this.props.transaction.amount}</td>
+                <td>{this.props.transaction.amount.toFixed(2)}</td>
                 <td>{this.props.transaction.recipient.substring(60,75)}</td>
                 <td>{sender}</td>
                 <td>{signature}</td>

@@ -570,3 +570,17 @@ button.like {
 .transactionsTable tbody tr:last-of-type {
   border-bottom: 2px solid #b884e0;
 }
+
+
+/************whitepaper***************/
+
+.whitepaper {
+  text-align: center;
+  padding: 0 30px;
+}
+
+@media (max-width: 800px) {
+  .whitepaper {
+    font-size: 1.1em;
+  }
+}

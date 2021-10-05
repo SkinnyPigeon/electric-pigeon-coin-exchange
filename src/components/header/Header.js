@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Home from '../home/Home';
 import Presale from '../presale/Presale';
 import Blockchain from '../blockchain/Blockchain';
+import WhitePaper from '../whitepaper/WhitePaper';
 import Stolen from '../stolen/Stolen';
 
 import {
@@ -310,6 +311,9 @@ export default class Header extends Component {
                                 <li>
                                     <Link to="/blockchain">Blockchain</Link>
                                 </li>
+                                <li>
+                                    <Link to="/whitepaper">Whitepaper</Link>
+                                </li>
                             </ul>
                         </nav>
 
@@ -327,6 +331,9 @@ export default class Header extends Component {
                             </li>
                             <li>
                                 <Link to="/blockchain">Blockchain</Link>
+                            </li>
+                            <li>
+                                <Link to="/whitepaper">Whitepaper</Link>
                             </li>
                         </ul>
                     </nav>
@@ -368,6 +375,9 @@ export default class Header extends Component {
                         </Route>
                         <Route path="/blockchain">
                             <Blockchain urlPrefix={urlPrefix}/>
+                        </Route>
+                        <Route path="/whitepaper">
+                            <WhitePaper />
                         </Route>
                         <Route path="/">
                             <Home />

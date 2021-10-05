@@ -42,8 +42,15 @@ export default class Buy extends Component {
     }
 
     displayElon = (image) => {
+        const likeButton = document.getElementById('likeTheCoinDiv');
+        const likeXL = likeButton.getBoundingClientRect().left;
+        const likeXR = likeButton.getBoundingClientRect().right;
+        const likeX = likeXL + (likeXR - likeXL) / 2;
+        const likeYT = likeButton.getBoundingClientRect().top;
+        const likeYB = likeButton.getBoundingClientRect().bottom;
+        const likeY = likeYT + (likeYT - likeYB) / 2;
         const elonFace = <div>
-        <img src={image} alt="Elon" style={{width:"50px", position: "absolute"}}/>
+        <img src={image} alt="Elon" style={{width:"50px", position: "absolute", left: likeX, top: likeY}} className='floatingLikes'/>
         <BasicDisplay 
                 selectPurchaseAmount={this.props.selectPurchaseAmount}
                 purchaseAmount={this.props.purchaseAmount}

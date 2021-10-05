@@ -6,7 +6,7 @@ export default class BasicDisplay extends Component {
         return (
             <div className="buyDiv">
             <div className="buyCoinDiv">
-                <p>How many coins? </p>
+                <p>Spend how much? </p>
                 <input 
                     type="number" 
                     placeholder='0.00'

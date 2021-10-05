@@ -7,29 +7,13 @@ import elonUpImg from '../elon/elon_up.png';
 export default class Buy extends Component {
 
     state = {
-        toDisplay: "",
-    }
-
-    componentDidMount() {
-        this.setState({
-            toDisplay: <BasicDisplay 
-                selectPurchaseAmount={this.props.selectPurchaseAmount}
-                purchaseAmount={this.props.purchaseAmount}
-                selectedSeller={this.props.selectedSeller}
-                buyButtonClass={this.props.buyButtonClass}
-                makePurchase={this.props.makePurchase}
-                cancelButtonClass={this.props.cancelButtonClass}
-                cancelPurchase={this.props.cancelPurchase}
-                likeTheCoinClass={this.props.likeTheCoinClass}
-                likeTheCoin={this.props.likeTheCoin}
-            />
-        })
+        elon: "",
     }
 
     componentDidUpdate(prevProps, prevState) {
         console.log("CALLED")
         if(prevProps.likeTheCoinDifference !== this.props.likeTheCoinDifference) {
-            this.displayLikes()
+            this.displayLikes();
         }
         if(prevProps.elonUpCount !== this.props.elonUpCount && !prevProps.elonUpFirst) {
             console.log("ELON'S UP TO SOMETHING");
@@ -42,6 +26,7 @@ export default class Buy extends Component {
     }
 
     displayElon = (image) => {
+        
         const likeButton = document.getElementById('likeTheCoinDiv');
         const likeXL = likeButton.getBoundingClientRect().left;
         const likeXR = likeButton.getBoundingClientRect().right;
@@ -49,36 +34,13 @@ export default class Buy extends Component {
         const likeYT = likeButton.getBoundingClientRect().top;
         const likeYB = likeButton.getBoundingClientRect().bottom;
         const likeY = likeYT + (likeYT - likeYB) / 2;
-        const elonFace = <div>
-        <img src={image} alt="Elon" style={{width:"50px", position: "absolute", left: likeX, top: likeY}} className='floatingLikes'/>
-        <BasicDisplay 
-                selectPurchaseAmount={this.props.selectPurchaseAmount}
-                purchaseAmount={this.props.purchaseAmount}
-                selectedSeller={this.props.selectedSeller}
-                buyButtonClass={this.props.buyButtonClass}
-                makePurchase={this.props.makePurchase}
-                cancelButtonClass={this.props.cancelButtonClass}
-                cancelPurchase={this.props.cancelPurchase}
-                likeTheCoinClass={this.props.likeTheCoinClass}
-                likeTheCoin={this.props.likeTheCoin}
-            />
-        </div>
+        const elon = <img src={image} alt="Elon" style={{width:"50px", position: "absolute", left: likeX, top: likeY}} className='floatingLikes'/>
         this.setState({
-            toDisplay: elonFace
+            elon: elon
         })
         setTimeout(() => {
             this.setState({
-                toDisplay: <BasicDisplay 
-                    selectPurchaseAmount={this.props.selectPurchaseAmount}
-                    purchaseAmount={this.props.purchaseAmount}
-                    selectedSeller={this.props.selectedSeller}
-                    buyButtonClass={this.props.buyButtonClass}
-                    makePurchase={this.props.makePurchase}
-                    cancelButtonClass={this.props.cancelButtonClass}
-                    cancelPurchase={this.props.cancelPurchase}
-                    likeTheCoinClass={this.props.likeTheCoinClass}
-                    likeTheCoin={this.props.likeTheCoin}
-                />
+                elon: ""
             })
         }, 5000);
     }
@@ -122,7 +84,18 @@ export default class Buy extends Component {
     render () {
         return (
             <div>
-                {this.state.toDisplay}
+                <BasicDisplay 
+                    selectPurchaseAmount={this.props.selectPurchaseAmount}
+                    purchaseAmount={this.props.purchaseAmount}
+                    selectedSeller={this.props.selectedSeller}
+                    buyButtonClass={this.props.buyButtonClass}
+                    makePurchase={this.props.makePurchase}
+                    cancelButtonClass={this.props.cancelButtonClass}
+                    cancelPurchase={this.props.cancelPurchase}
+                    likeTheCoinClass={this.props.likeTheCoinClass}
+                    likeTheCoin={this.props.likeTheCoin}
+                />
+                {this.state.elon}
             </div>
         )
     }

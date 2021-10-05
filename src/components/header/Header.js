@@ -69,19 +69,19 @@ export default class Header extends Component {
     }
 
     startQueryingBlockchain = () => {
-        // const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
-        // const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
+        const sellerInfoIntervalID = setInterval(this.getSellerInfo, 5000);
+        const userBalanceIntervalID = setInterval(this.getUserBalance, 5000);
         const likeCountIntervalID = setInterval(this.getLikeCount, 5000);
         const elonReactionCountIntervalID = setInterval(this.getElonCounts, 5000);
         const valueIntervalID = setInterval(this.getCoinValue, 1000);
-        // const stolenIntervalID = setInterval(this.checkStolen, 5000);
+        const stolenIntervalID = setInterval(this.checkStolen, 5000);
         const intervals = [
-            // sellerInfoIntervalID, 
-            // userBalanceIntervalID, 
+            sellerInfoIntervalID, 
+            userBalanceIntervalID, 
             likeCountIntervalID,
             valueIntervalID,
             elonReactionCountIntervalID,
-            // stolenIntervalID
+            stolenIntervalID
         ]
         this.setState({
             intervals: intervals

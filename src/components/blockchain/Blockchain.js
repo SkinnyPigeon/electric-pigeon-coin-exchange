@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Block from '../block/Block';
+import Transaction from '../transaction/Transaction';
 
 const urlPrefix = "http://localhost:5000"
 // const urlPrefix = "https://13.80.254.215"
@@ -40,18 +41,56 @@ export default class Blockchain extends Component {
         console.log(this.state)
     }
 
+    createDetailTables = () => {
+        if(this.state.row.transactions.length > 0) {
+            return <>
+                <div className="detailsContainer">
+                    <table className="detailsTable">
+                        <thead>
+                            <tr>
+                                <th>Proof</th>
+                                <th>Previous Hash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{this.state.row.proof}</td>
+                                <td>{this.state.row.previous_hash}</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <table className="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Recipient</th>
+                                <th>Sender</th>
+                                <th>Signature</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.row.transactions.map((data, key) => {
+                                return (
+                                    <tr key={key} className="tableRow">
+                                        <Transaction transaction={data} />
+                                    </tr>
+                                );
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </>
+        } else {
+            return <></>
+        }
+    }
+
 
 
     render() {
-        const detailTables = <table className="transactionTable">
-            <thead>
-                <tr>
-                    <th>Proof</th>
-                    <th>Previous Hash</th>
-                    <th>Transactions</th>
-                </tr>
-            </thead>
-        </table>
+        const detailTables = this.createDetailTables()
         const showTable = this.state.row.transactions.length > 0; 
         const extraTable = showTable ? detailTables : "";
         return (

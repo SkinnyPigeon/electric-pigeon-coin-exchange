@@ -430,6 +430,10 @@ button.like {
   .blockTable {
     margin: 25px 0;
   }
+  .blockTable th,
+  .blockTable td {
+      padding: 12px 5px;
+  }
 }
 
 .blockTable thead tr {
@@ -462,41 +466,98 @@ button.like {
 }
 
 
-.transactionTable {
+.detailsContainer {
+  display: flex;
+  flex-grow: 3;
+  flex-flow: column;
+}
+
+
+.detailsTable {
   border-collapse: collapse;
   margin: 25px 20px;
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  flex-grow: 3;
+  /* flex-grow: 3; */
 }
 
 @media (max-width: 800px) {
-  .transactionTable {
+  .detailsTable {
     margin: 25px 0;
+  }
+  .detailsTable th,
+  .detailsTable td {
+      padding: 12px 5px;
   }
 }
 
-.transactionTable thead tr {
+.detailsTable thead tr {
   background-color: #b884e0;
   color: #ffffff;
   text-align: left;
 }
 
-.transactionTable th,
-.transactionTable td {
-    padding: 12px 15px;
+.detailsTable th,
+.detailsTable td {
+    padding: 12px 5px;
 }
 
-.transactionTable tbody tr {
+.detailsTable tbody tr {
   border-bottom: 1px solid #dddddd;
 }
 
-.transactionTable tbody tr:nth-of-type(even) {
+.detailsTable tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;
 }
 
-.transactionTable tbody tr:last-of-type {
+.detailsTable tbody tr:last-of-type {
+  border-bottom: 2px solid #b884e0;
+}
+
+
+.transactionsTable {
+  border-collapse: collapse;
+  margin: 25px 20px;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  /* max-width: 600px; */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  /* flex-grow: 3; */
+  /* display: flex; */
+}
+
+@media (max-width: 800px) {
+  .transactionsTable {
+    margin: 25px 0;
+  }
+}
+
+.transactionsTable thead tr {
+  background-color: #b884e0;
+  color: #ffffff;
+  text-align: left;
+}
+
+.transactionsTable th,
+.transactionsTable td {
+    padding: 12px 15px;
+    /* display: flex; */
+    max-width: 50px;
+    min-height: fit-content;
+    overflow: hidden;
+}
+
+.transactionsTable tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.transactionsTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.transactionsTable tbody tr:last-of-type {
   border-bottom: 2px solid #b884e0;
 }

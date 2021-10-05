@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Block from '../block/Block';
 import Transaction from '../transaction/Transaction';
 
-const urlPrefix = "http://localhost:5000"
+// const urlPrefix = "http://localhost:5000"
 // const urlPrefix = "https://13.80.254.215"
 
 export default class Blockchain extends Component {
@@ -20,7 +20,7 @@ export default class Blockchain extends Component {
     }
 
     componentDidMount() {
-        fetch( urlPrefix + '/blockchain/chain')
+        fetch( this.props.urlPrefix + '/blockchain/chain')
         .then(response => response.json())
         .then(function(data) {
             this.setState({
@@ -48,12 +48,14 @@ export default class Blockchain extends Component {
                     <table className="detailsTable">
                         <thead>
                             <tr>
+                                <th>Index</th>
                                 <th>Proof</th>
                                 <th>Previous Hash</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td>{this.state.row.index}</td>
                                 <td>{this.state.row.proof}</td>
                                 <td>{this.state.row.previous_hash.substring(0, 20)}</td>
                             </tr>

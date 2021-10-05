@@ -367,7 +367,7 @@ export default class Header extends Component {
                             </div>
                         </Route>
                         <Route path="/blockchain">
-                            <Blockchain />
+                            <Blockchain urlPrefix={urlPrefix}/>
                         </Route>
                         <Route path="/">
                             <Home />

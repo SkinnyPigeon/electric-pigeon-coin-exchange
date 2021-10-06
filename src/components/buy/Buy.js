@@ -11,16 +11,13 @@ export default class Buy extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("CALLED")
         if(prevProps.likeTheCoinDifference !== this.props.likeTheCoinDifference) {
             this.displayLikes();
         }
         if(prevProps.elonUpCount !== this.props.elonUpCount && !prevProps.elonUpFirst) {
-            console.log("ELON'S UP TO SOMETHING");
             this.displayElon(elonUpImg);
         } 
         if(prevProps.elonDownCount !== this.props.elonDownCount && !prevProps.elonDownFirst) {
-            console.log("HE'S GOING TO RUIN US ALL")
             this.displayElon(elonDownImg)
         }
     }

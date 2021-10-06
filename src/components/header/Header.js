@@ -12,8 +12,8 @@ import {
     Link
 } from "react-router-dom";
 
-const urlPrefix = "http://localhost:5000"
-// const urlPrefix = "https://13.80.254.215"
+// const urlPrefix = "http://localhost:5000"
+const urlPrefix = "https://13.80.254.215"
 
 export default class Header extends Component {
 
@@ -113,7 +113,6 @@ export default class Header extends Component {
                     const newLikeCount = data['message'];
                     if (Number.isInteger(newLikeCount)) {
                         if (newLikeCount > likeCount) {
-                            console.log('UPDATING THE LIKE COUNT')
                             const difference = newLikeCount - likeCount;
                             this.setState({
                                 likeCount: newLikeCount,
@@ -123,7 +122,6 @@ export default class Header extends Component {
                     }
                 } else {
                     if (Number.isInteger(data['message'])) {
-                        console.log('SETTING LIKE COUNT FOR THE FIRST TIME')
                         this.setState({
                             likeCount: data['message']
                         });
@@ -152,7 +150,6 @@ export default class Header extends Component {
                 const elonDownCount = this.state.elonDownCount;
                 if (Number.isInteger(data['elon_up'])) {
                     if (data['elon_up'] > elonUpCount) {
-                        console.log(data);
                         this.setState({
                             elonUpCount: data['elon_up'],
                             elonUpFirst: false
@@ -195,7 +192,6 @@ export default class Header extends Component {
         })
             .then(response => response.json())
             .then(function (data) {
-                console.log(data)
                 const difference = data.balance - this.state.coinsOwned;
                 let coinsPending = this.state.coinsPending - difference;
                 coinsPending = coinsPending < 0 ? 0 : coinsPending;
@@ -240,8 +236,8 @@ export default class Header extends Component {
     makePurchase = () => {
         if (this.state.selectedSeller !== '' &&
             this.state.purchaseAmount > 0 &&
-            this.state.balance * this.state.exchangeRate < this.state.selectedSellerBalance &&
             this.state.balance >= this.state.purchaseAmount &&
+            parseFloat(this.state.selectedSellerBalance) / this.state.exchangeRate > this.state.purchaseAmount &&
             this.state.balance > 0) {
             const transaction = {
                 id: this.state.walletID,

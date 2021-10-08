@@ -12,8 +12,9 @@ import {
     Link
 } from "react-router-dom";
 
-// const urlPrefix = "http://localhost:5000"
-const urlPrefix = "https://13.80.254.215"
+const urlPrefix = "http://localhost:5000"
+// const urlPrefix = "https://13.80.254.215"
+// const urlPrefix = "https://melonlander.co.uk"
 
 export default class Header extends Component {
 
@@ -67,6 +68,20 @@ export default class Header extends Component {
         this.state.intervals.forEach(interval => {
             clearInterval(interval)
         })
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if(this.state.coinsOwned < prevState.coinsOwned) {
+            const newBalance = this.state.balance + (prevState.coinsOwned - this.state.coinsOwned) * this.state.exchangeRate;
+            this.setState({
+                balance: newBalance
+            })
+        }
+        if(this.state.coinsOwned !== prevState.coinsOwned) {
+            this.setState({
+                coinsPending: 0
+            })
+        }
     }
 
     startQueryingBlockchain = () => {
@@ -192,12 +207,13 @@ export default class Header extends Component {
         })
             .then(response => response.json())
             .then(function (data) {
-                const difference = data.balance - this.state.coinsOwned;
-                let coinsPending = this.state.coinsPending - difference;
-                coinsPending = coinsPending < 0 ? 0 : coinsPending;
+                // const difference = data.balance - this.state.coinsOwned;
+                // let coinsPending = this.state.coinsPending - difference;
+                // coinsPending = coinsPending < 0 ? 0 : coinsPending;
                 this.setState({
-                    coinsOwned: data.balance,
-                    coinsPending: coinsPending
+                //     coinsOwned: data.balance,
+                //     coinsPending: coinsPending
+                    coinsOwned: data.balance
                 })
             }.bind(this))
             .catch(error => console.log(error))

@@ -10,6 +10,7 @@ export default class Balance extends Component {
                 <p className="balanceText">Coins Pending: {this.props.coinsPending.toFixed(2)}</p>
                 <p className="balanceText">Exchange Rate: {this.props.exchangeRate.toFixed(2)}</p>
                 <p className="balanceText">Value of coins: £{(this.props.exchangeRate * this.props.coinsOwned).toFixed(2)}</p>
+                <p className="balanceText">Total Wallet Value: £{(this.props.balance + (this.props.exchangeRate * this.props.coinsOwned)).toFixed(2)}</p>
             </div>
         )
     }

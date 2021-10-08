@@ -201,6 +201,15 @@ a:hover {
   overflow: scroll;
 }
 
+.sellerDiv::-webkit-scrollbar {
+  display: none;
+}
+
+.sellerDiv {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (max-width: 800px) {
   .sellerDiv {
     height: 6em;
@@ -427,6 +436,15 @@ button.like {
   height: 50px;
 }
 
+.blockTable::-webkit-scrollbar {
+  display: none;
+}
+
+.blockTable {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @media (max-width: 800px) {
   .blockTable {
     margin: 25px 0;
@@ -558,6 +576,18 @@ button.like {
     min-height: fit-content;
     overflow: hidden;
 }
+
+.transactionsTable th::-webkit-scrollbar,
+.transactionsTable td::-webkit-scrollbar {
+    display: none;
+}
+
+.transactionsTable,
+.transactionsTable {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 
 .transactionsTable tbody tr {
   border-bottom: 1px solid #dddddd;

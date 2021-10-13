@@ -3,6 +3,10 @@ import Button from '../button/Button';
 
 export default class BasicDisplay extends Component {
     render() {
+        console.log(this.props.exchangeRate)
+        const coinAmount = parseFloat(this.props.purchaseAmount) / parseFloat(this.props.exchangeRate);
+        console.log(coinAmount)
+        const coinDisplay = Number.isNaN(coinAmount) ? "0.00" : coinAmount.toFixed(2);
         return (
             <div className="buyDiv">
             <div className="buyCoinDiv">
@@ -14,6 +18,7 @@ export default class BasicDisplay extends Component {
                     value={this.props.purchaseAmount}
                 >
                 </input>
+                <p>Coins: {coinDisplay}</p>
             </div>
             <div className="buySellerDiv">
                 <p>Seller: </p>

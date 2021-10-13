@@ -33,6 +33,7 @@ export default class Presale extends Component {
 
                     purchaseAmount={this.props.purchaseAmount}
                     selectPurchaseAmount={this.props.selectPurchaseAmount}
+                    exchangeRate={this.props.exchangeRate}
 
                     buyButtonClass={this.props.buyButtonClass}
                     makePurchase={this.props.makePurchase}

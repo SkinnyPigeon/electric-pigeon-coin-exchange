@@ -91,6 +91,7 @@ export default class Buy extends Component {
                     cancelPurchase={this.props.cancelPurchase}
                     likeTheCoinClass={this.props.likeTheCoinClass}
                     likeTheCoin={this.props.likeTheCoin}
+                    exchangeRate={this.props.exchangeRate}
                 />
                 {this.state.elon}
             </div>
